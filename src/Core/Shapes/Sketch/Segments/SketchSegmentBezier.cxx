@@ -1,0 +1,1 @@
+#include "Core/Shapes/Sketch/Segments/SketchSegmentBezier.hxx"
