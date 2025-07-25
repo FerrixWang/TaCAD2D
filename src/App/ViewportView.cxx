@@ -1,6 +1,6 @@
 // Copyright [2025] TaCAD
 
-// Own includes
+// Header included
 #include "App/ViewportView.hxx"
 
 // Qt includes

@@ -1,7 +1,6 @@
 #ifndef ENUM_CLASS_FLAGS_HPP
 #define ENUM_CLASS_FLAGS_HPP
 
-
 #include "allow_flags.hpp"
 #include "iterator.hpp"
 

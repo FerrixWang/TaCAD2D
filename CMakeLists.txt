@@ -14,7 +14,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 
 # 依赖库路径配置
-set(QT6_DIR "" CACHE PATH "Qt6 installation directory (e.g., C:/Qt/6.4.2/msvc2019_64)")
+set(QT6_DIR "" CACHE PATH "Qt6 installation directory")
 set(OpenCASCADE_DIR "" CACHE PATH "OpenCASCADE installation directory")
 set(BOOST_ROOT "" CACHE PATH "Boost root directory")
 

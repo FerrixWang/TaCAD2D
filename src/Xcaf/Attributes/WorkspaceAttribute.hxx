@@ -5,9 +5,9 @@
 #include <Standard.hxx>
 #include <Standard_GUID.hxx>
 #include <Standard_Type.hxx>
+#include <TDataStd_Integer.hxx>
 #include <TDF_Label.hxx>
 #include <TDF_RelocationTable.hxx>
-#include <TDataStd_Integer.hxx>
 
 #include "Core/Workspace.hxx"
 #include "Xcaf/Attributes/WorkingContextAttribute.hxx"
