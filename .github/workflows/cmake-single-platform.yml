@@ -12,8 +12,8 @@ env:
   BUILD_TYPE: Release
   QT_VERSION: 6.7.2
   QT_BASE_DIR: C:/Qt
-  QT_CMAKE_PATH: ${{ env.QT_BASE_DIR }}/Tools/CMake_6.7.2
-  QT_DIR: ${{ env.QT_BASE_DIR }}/6.7.2/msvc2022_64
+  QT_CMAKE_PATH:  C:/Qt/Tools/CMake_6.7.2
+  QT_DIR:  C:/Qt/6.7.2/msvc2022_64
 
 jobs:
   build:
