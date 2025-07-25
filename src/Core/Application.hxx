@@ -16,9 +16,9 @@ class Application : public TDocStd_Application, public EnablePropertyChanged
 public:
     explicit Application();
 
-    Handle(Document) NewModel(Document::Format theFormat);
+    Handle<Document> NewModel(Document::Format theFormat);
 
-    Handle(Document) OpenModel(const std::string& thePath, Document::Format theFormat);
+    Handle<Document> OpenModel(const std::string& thePath, Document::Format theFormat);
 
     bool SaveModel();
 

@@ -60,7 +60,7 @@ public:
         }
     }
 
-    Handle(AIS_InteractiveObject) AisObject() const override
+    Handle<AIS_InteractiveObject> AisObject() const override
     {
         return _AisCircle;
     }
@@ -80,8 +80,8 @@ public:
 
     void Set(const gp_Circ2d& circ2d, const gp_Pln& plane)
     {
-        Handle(Geom2d_Circle) geom2dCircle = new Geom2d_Circle(circ2d);
-        _Circle = Handle(Geom_Circle)::DownCast(GeomAPI::To3d(geom2dCircle, plane));
+        Handle<Geom2d_Circle> geom2dCircle = new Geom2d_Circle(circ2d);
+        _Circle = Handle<Geom_Circle>::DownCast(GeomAPI::To3d(geom2dCircle, plane));
         Update();
     }
 
@@ -127,8 +127,8 @@ private:
     }
 
 private:
-    Handle(AIS_Circle) _AisCircle;
-    Handle(Geom_Circle) _Circle;
+    Handle<AIS_Circle> _AisCircle;
+    Handle<Geom_Circle> _Circle;
     double _StartParam;
     double _EndParam;
     HintStyles _Styles;

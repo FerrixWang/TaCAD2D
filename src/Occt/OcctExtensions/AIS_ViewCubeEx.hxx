@@ -24,14 +24,14 @@ public:
 	             const opencascade::handle<Prs3d_Presentation>& thePrs,
 	             const Standard_Integer theMode) override;
 
-	void HilightOwnerWithColor(const Handle(PrsMgr_PresentationManager)& thePrsMgr,
-	                           const Handle(Prs3d_Drawer)& theStyle,
-	                           const Handle(SelectMgr_EntityOwner)& theOwner) override;
+	void HilightOwnerWithColor(const Handle<PrsMgr_PresentationManager>& thePrsMgr,
+	                           const Handle<Prs3d_Drawer>& theStyle,
+	                           const Handle<SelectMgr_EntityOwner>& theOwner) override;
 	
 	void SetTexture(const opencascade::handle<Image_PixMap>& thePixMap);
 	
 protected:
-	void createBoxSideTriangles(const Handle(Graphic3d_ArrayOfTriangles)& theTris,
+	void createBoxSideTriangles(const Handle<Graphic3d_ArrayOfTriangles>& theTris,
 	                            Standard_Integer& theNbNodes, Standard_Integer& theNbTris,
 	                            V3d_TypeOfOrientation theDirection) const override;
 };

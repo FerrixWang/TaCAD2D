@@ -17,28 +17,28 @@ public:
 		return static_cast<InteractiveContext*>(CoreContext::Current());
 	}
 
-	Handle(Application) GetApplication() const
+	Handle<Application> GetApplication() const
 	{
 		return m_application;
 	}
 
-	Handle(WorkspaceController) GetWorkspaceController() const
+	Handle<WorkspaceController> GetWorkspaceController() const
 	{
 		return m_workspaceController;
 	}
 
-	Handle(ViewportController) GetViewportController() const
+	Handle<ViewportController> GetViewportController() const
 	{
 		return m_viewportController;
 	}
 
-	Handle(EditorState) GetEditorState() const
+	Handle<EditorState> GetEditorState() const
 	{
 		return m_editorState;
 	}
 
 protected:
-	virtual void SetWorkspace(const Handle(Workspace)& workspace) override
+	virtual void SetWorkspace(const Handle<Workspace>& workspace) override
 	{
 		if(!workspace.IsNull() && m_workspace != workspace)
 		{
@@ -48,7 +48,7 @@ protected:
 		}
 	}
 
-	virtual void SetViewport(const Handle(Viewport)& viewport) override
+	virtual void SetViewport(const Handle<Viewport>& viewport) override
 	{
 		if(!viewport.IsNull() && m_viewport != viewport)
 		{
@@ -59,7 +59,7 @@ protected:
 	}
 
 private:
-	void SetWorkspaceController(const Handle(WorkspaceController)& controller)
+	void SetWorkspaceController(const Handle<WorkspaceController>& controller)
 	{
 		if(!controller.IsNull() && m_workspaceController != controller)
 		{
@@ -69,7 +69,7 @@ private:
 		}
 	}
 
-	void SetViewportController(const Handle(ViewportController)& controller)
+	void SetViewportController(const Handle<ViewportController>& controller)
 	{
 		if(!controller.IsNull() && m_viewportController != controller)
 		{
@@ -86,15 +86,15 @@ private:
 	void SaveEditorState();
 
 public:
-	Signal<void(const Handle(WorkspaceController)&)> workspaceControllerChanged;
-	Signal<void(const Handle(ViewportController)&)> viewportControllerChanged;
+	Signal<void(const Handle<WorkspaceController>&)> workspaceControllerChanged;
+	Signal<void(const Handle<ViewportController>&)> viewportControllerChanged;
 
 private:
-	Handle(Application)         m_application;
-	Handle(WorkspaceController) m_workspaceController;
-	Handle(ViewportController)  m_viewportController;
+	Handle<Application>         m_application;
+	Handle<WorkspaceController> m_workspaceController;
+	Handle<ViewportController>  m_viewportController;
 
-	Handle(EditorState) m_editorState;
+	Handle<EditorState> m_editorState;
 };
 
 #endif  // IACT_WORKSPACE_INTERACTIVECONTEXT_H_

@@ -28,31 +28,31 @@ public:
 
     static Standard_Boolean Has(const TDF_Label& acces);
 
-    static Handle(ViewportAttribute) Set(const TDF_Label& acces, const Handle(Viewport)& IC);
+    static Handle<ViewportAttribute> Set(const TDF_Label& acces, const Handle<Viewport>& IC);
 
-    static Handle(ViewportAttribute) New(const TDF_Label& acces,
-                                          const Handle(Viewport)& viewer);
+    static Handle<ViewportAttribute> New(const TDF_Label& acces,
+                                          const Handle<Viewport>& viewer);
     void Init();
 
     static Standard_Boolean Find(const TDF_Label& acces,
-                                 Handle(ViewportAttribute)& A);
+                                 Handle<ViewportAttribute>& A);
 
-    static Standard_Boolean Find(const TDF_Label& acces, Handle(Viewport)& V);
+    static Standard_Boolean Find(const TDF_Label& acces, Handle<Viewport>& V);
 
     ViewportAttribute();
 
-    void SetViewport(const Handle(Viewport)& Viewport);
+    void SetViewport(const Handle<Viewport>& Viewport);
 
-    Handle(Viewport) GetViewport() const;
+    Handle<Viewport> GetViewport() const;
 
     const Standard_GUID& ID() const Standard_OVERRIDE;
 
-    void Restore(const Handle(TDF_Attribute)& with) Standard_OVERRIDE;
+    void Restore(const Handle<TDF_Attribute>& with) Standard_OVERRIDE;
 
-    Handle(TDF_Attribute) NewEmpty() const Standard_OVERRIDE;
+    Handle<TDF_Attribute> NewEmpty() const Standard_OVERRIDE;
 
-    void Paste(const Handle(TDF_Attribute)& into,
-               const Handle(TDF_RelocationTable)& RT) const Standard_OVERRIDE;
+    void Paste(const Handle<TDF_Attribute>& into,
+               const Handle<TDF_RelocationTable>& RT) const Standard_OVERRIDE;
 
     virtual void DumpJson(Standard_OStream& theOStream,
                           Standard_Integer  theDepth = -1) const Standard_OVERRIDE;

@@ -86,7 +86,7 @@
 //    }
 //
 //    // 处理草图变化，更新边界框
-//    virtual void OnSketchChanged(const Handle(Sketch)& sketch, Sketch::ElementType types) override
+//    virtual void OnSketchChanged(const Handle<Sketch>& sketch, Sketch::ElementType types) override
 //    {
 //        _UpdateBoundingBox();
 //    }
@@ -191,7 +191,7 @@
 //
 //        for(int pointIndex : allPoints)
 //        {
-//            std::vector<Handle(SketchSegment)> segmentsWithPoint;
+//            std::vector<Handle<SketchSegment>> segmentsWithPoint;
 //            for(const auto& [idx, seg] : SketchEditorTool->GetSketch()->Segments())
 //            {
 //                auto segPoints = seg->PointsAttribute()->Array();
@@ -227,7 +227,7 @@
 //    }
 //
 //    // 处理缩放动作的预览更新
-//    void _PointAction_Preview(const Handle(ScaleSketchElementAction)& sender, const ScaleSketchElementAction::EventArgs& args)
+//    void _PointAction_Preview(const Handle<ScaleSketchElementAction>& sender, const ScaleSketchElementAction::EventArgs& args)
 //    {
 //        double scale = _UpdatePoints(args);
 //        _UpdateElements();
@@ -241,7 +241,7 @@
 //    }
 //
 //    // 处理缩放动作完成
-//    void _PointAction_Finished(const Handle(ScaleSketchElementAction)& sender, const ScaleSketchElementAction::EventArgs& args)
+//    void _PointAction_Finished(const Handle<ScaleSketchElementAction>& sender, const ScaleSketchElementAction::EventArgs& args)
 //    {
 //        if(_HudElement)
 //        {
@@ -350,13 +350,13 @@
 //
 //private:
 //    std::vector<int> _SelectedPoints; // 选中的点索引
-//    std::vector<Handle(SketchSegment)> _OriginalSegments; // 原始线段
+//    std::vector<Handle<SketchSegment>> _OriginalSegments; // 原始线段
 //    std::map<int, gp_Pnt2d> _TempPoints; // 缩放后的临时点
-//    std::map<int, Handle(SketchSegment)> _TempSegments; // 缩放后的临时线段
-//    std::map<int, Handle(SketchElementPoint)> _PreviewPointElements; // 预览点元素
-//    std::map<int, Handle(SketchElementSegment)> _PreviewSegmentElements; // 预览线段元素
-//    Handle(ScaleSketchElementAction) _ToolAction; // 缩放动作
-//    Handle(LabelHudElement) _HudElement; // HUD元素，显示缩放比例
+//    std::map<int, Handle<SketchSegment>> _TempSegments; // 缩放后的临时线段
+//    std::map<int, Handle<SketchElementPoint>> _PreviewPointElements; // 预览点元素
+//    std::map<int, Handle<SketchElementSegment>> _PreviewSegmentElements; // 预览线段元素
+//    Handle<ScaleSketchElementAction> _ToolAction; // 缩放动作
+//    Handle<LabelHudElement> _HudElement; // HUD元素，显示缩放比例
 //    bool _PreviewIsValid; // 预览有效标志
 //
 //public:

@@ -26,16 +26,16 @@ public:
 
      static Standard_Boolean Has(const TDF_Label& acces);
 
-     static Handle(WorkspaceAttribute) Set(const TDF_Label& acces, const Handle(Workspace)& IC);
+     static Handle<WorkspaceAttribute> Set(const TDF_Label& acces, const Handle<Workspace>& IC);
 
-     static Handle(WorkspaceAttribute) New(const TDF_Label& acces,
-                                                         const Handle(Workspace)& viewer);
+     static Handle<WorkspaceAttribute> New(const TDF_Label& acces,
+                                                         const Handle<Workspace>& viewer);
      void Init();
 
      static Standard_Boolean Find(const TDF_Label& acces,
-                                                 Handle(WorkspaceAttribute)& A);
+                                                 Handle<WorkspaceAttribute>& A);
 
-     static Standard_Boolean Find(const TDF_Label& acces, Handle(Workspace)& V);
+     static Standard_Boolean Find(const TDF_Label& acces, Handle<Workspace>& V);
 
      static void Update(const TDF_Label& acces);
 
@@ -43,18 +43,18 @@ public:
 
      void Update() const;
 
-     void SetWorkspace(const Handle(Workspace)& workspace);
+     void SetWorkspace(const Handle<Workspace>& workspace);
 
-     Handle(Workspace) GetWorkspace() const;
+     Handle<Workspace> GetWorkspace() const;
 
      const Standard_GUID& ID() const Standard_OVERRIDE;
 
-     void Restore(const Handle(TDF_Attribute)& with) Standard_OVERRIDE;
+     void Restore(const Handle<TDF_Attribute>& with) Standard_OVERRIDE;
 
-     Handle(TDF_Attribute) NewEmpty() const Standard_OVERRIDE;
+     Handle<TDF_Attribute> NewEmpty() const Standard_OVERRIDE;
 
-     void Paste(const Handle(TDF_Attribute)& into,
-                               const Handle(TDF_RelocationTable)& RT) const Standard_OVERRIDE;
+     void Paste(const Handle<TDF_Attribute>& into,
+                               const Handle<TDF_RelocationTable>& RT) const Standard_OVERRIDE;
 
      virtual void DumpJson(Standard_OStream& theOStream,
                                           Standard_Integer  theDepth = -1) const Standard_OVERRIDE;

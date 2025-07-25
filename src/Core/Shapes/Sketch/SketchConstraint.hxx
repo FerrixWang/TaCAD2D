@@ -35,17 +35,17 @@ public:
     SketchConstraint(const TDF_Label& label)
         : myLabel(label)
     {
-        Handle(TDataXtd_Shape) shapeAttr;
+        Handle<TDataXtd_Shape> shapeAttr;
         if(!ShapeLabel().FindAttribute(TDataXtd_Shape::GetID(), shapeAttr))
         {
             TDataXtd_Shape::Set(ShapeLabel(), {});
         }
-        Handle(TDataStd_IntegerArray) arrayAttr;
+        Handle<TDataStd_IntegerArray> arrayAttr;
         if(!PointsLabel().FindAttribute(TDataStd_IntegerArray::GetID(), arrayAttr))
         {
             PointsAttribute() = TDataStd_IntegerArray::Set(PointsLabel(), 0, 0);
         }
-        Handle(TDataStd_IntegerArray) auxAttr;
+        Handle<TDataStd_IntegerArray> auxAttr;
         if(!SegmentsLabel().FindAttribute(TDataStd_IntegerArray::GetID(), auxAttr))
         {
             SegmentsAttribute() = TDataStd_IntegerArray::Set(SegmentsLabel(), 0, 0);
@@ -56,7 +56,7 @@ public:
 
     virtual TDF_Label InstanceLabel() const { return myLabel.Father(); }
 
-    virtual Handle(SketchConstraint) Clone() const
+    virtual Handle<SketchConstraint> Clone() const
     {
         return nullptr;
     }
@@ -137,12 +137,12 @@ public:
 
     // Pure virtual methods
     virtual bool MakeConstraint(const std::map<int, gp_Pnt2d>& points,
-                                const std::map<int, Handle(SketchSegment)>& segments,
-                                const Handle(SketchConstraintSolver)& solver) = 0;
+                                const std::map<int, Handle<SketchSegment>>& segments,
+                                const Handle<SketchConstraintSolver>& solver) = 0;
 
 protected:
     bool ComputeCirclePoints(const std::map<int, gp_Pnt2d>& points,
-                             const Handle(SketchSegment)& segment,
+                             const Handle<SketchSegment>& segment,
                              const gp_Pln& plane,
                              gp_Pnt& center,
                              gp_Pnt& rim,
@@ -158,7 +158,7 @@ protected:
 
         if(segment->IsKind(STANDARD_TYPE(SketchSegmentCircle)))
         {
-            auto circleSegment = Handle(SketchSegmentCircle)::DownCast(segment);
+            auto circleSegment = Handle<SketchSegmentCircle>::DownCast(segment);
             auto it = points.find(circleSegment->CenterPoint());
             if(it != points.end())
             {
@@ -174,7 +174,7 @@ protected:
         }
         else if(segment->IsKind(STANDARD_TYPE(SketchSegmentArc)))
         {
-            auto arcSegment = Handle(SketchSegmentArc)::DownCast(segment);
+            auto arcSegment = Handle<SketchSegmentArc>::DownCast(segment);
             centerPoint2d = arcSegment->Center(points);
             auto it = points.find(arcSegment->RimPoint());
             if(it != points.end())

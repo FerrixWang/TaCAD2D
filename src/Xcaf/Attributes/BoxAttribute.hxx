@@ -22,9 +22,9 @@ class BoxAttribute : public TDataStd_GenericEmpty
 public:
     static const Standard_GUID& GetID();
 
-    static Handle(BoxAttribute) Set(const TDF_Label& L, const Handle(Box)& S);
+    static Handle<BoxAttribute> Set(const TDF_Label& L, const Handle<Box>& S);
 
-    void SetBox(const Handle(Box)& workspace);
+    void SetBox(const Handle<Box>& workspace);
 
     BoxAttribute();
 

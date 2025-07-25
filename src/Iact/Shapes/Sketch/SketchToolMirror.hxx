@@ -54,7 +54,7 @@ public:
         for(int i = 0; i < _OriginalSegments.size(); i++)
         {
 			auto segment = _OriginalSegments[i]->Clone();
-            if(!Handle(SketchSegmentEllipticalArc)::DownCast(segment).IsNull())
+            if(!Handle<SketchSegmentEllipticalArc>::DownCast(segment).IsNull())
             {
 				segment->PointsAttribute()->SetValue(0, _OriginalSegments[i]->PointsAttribute()->Value(1));
 				segment->PointsAttribute()->SetValue(1, _OriginalSegments[i]->PointsAttribute()->Value(0));
@@ -101,7 +101,7 @@ public:
     }
 
 private:
-    void _PointAction_Preview(const Handle(SketchPointAction)& _PointAction)
+    void _PointAction_Preview(const Handle<SketchPointAction>& _PointAction)
     {
         auto senderPoint = _PointAction->Point();
 
@@ -132,7 +132,7 @@ private:
         }
     }
 
-    void _PointAction_Finished(const Handle(SketchPointAction)& _PointAction)
+    void _PointAction_Finished(const Handle<SketchPointAction>& _PointAction)
     {
         auto senderPoint = _PointAction->Point();
 
@@ -213,15 +213,15 @@ public:
     static Signal<void()> Stoped;
 
 private:    
-    std::vector<Handle(SketchSegment)> _OriginalSegments;
+    std::vector<Handle<SketchSegment>> _OriginalSegments;
     std::vector<int> _OriginalPoints;
     std::map<int, gp_Pnt2d> _Points;
     std::map<int, gp_Pnt2d> _TempPoints;
-    std::map<int, Handle(SketchSegment)> _TempSegments;
-    std::map<int, Handle(SketchElementSegment)> _PreviewSegmentElements;
-    std::map<int, Handle(SketchElementPoint)> _PreviewPointElements;
-    Handle(HintLine) _AxisHint;
-    Handle(SketchPointAction) _PointAction;
+    std::map<int, Handle<SketchSegment>> _TempSegments;
+    std::map<int, Handle<SketchElementSegment>> _PreviewSegmentElements;
+    std::map<int, Handle<SketchElementPoint>> _PreviewPointElements;
+    Handle<HintLine> _AxisHint;
+    Handle<SketchPointAction> _PointAction;
     gp_Ax2d _MirrorAxis;
     Coord2DHudElement* _Coord2DHudElement;
     int _PreviewPoint;

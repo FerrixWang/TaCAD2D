@@ -60,11 +60,11 @@ public:
 
     int AddPoint(const gp_Pnt2d& point, int nextIndex = -1);
 
-    int AddSegment(const Handle(SketchSegment)& segment, int index = -1);
+    int AddSegment(const Handle<SketchSegment>& segment, int index = -1);
 
-    int AddConstraint(const Handle(SketchConstraint)& constraint, int index = -1);
+    int AddConstraint(const Handle<SketchConstraint>& constraint, int index = -1);
 
-	void DeleteSegment(const Handle(SketchSegment)& segment)
+	void DeleteSegment(const Handle<SketchSegment>& segment)
 	{
 		// É¾³ýÏß¶Î
 		auto segmentsLabel = segment->InstanceLabel();
@@ -106,7 +106,7 @@ public:
         return pointsMap;
     }
 
-    const std::map<int, Handle(SketchSegment)>& Segments()
+    const std::map<int, Handle<SketchSegment>>& Segments()
     {
         segmentsMap.clear();
 
@@ -130,7 +130,7 @@ public:
         return segmentsMap;
     }
 
-    const std::vector<Handle(SketchConstraint)>& Constraints()
+    const std::vector<Handle<SketchConstraint>>& Constraints()
     {
         constraintsArray.clear();
 
@@ -181,8 +181,8 @@ public:
 
     auto AddElements(const std::map<int, gp_Pnt2d>& points,
                      const std::vector<int>& mergePointIndices,
-                     const std::map<int, Handle(SketchSegment)>& segments, 
-					 const std::vector<Handle(SketchConstraint)> constraints = {})
+                     const std::map<int, Handle<SketchSegment>>& segments, 
+					 const std::vector<Handle<SketchConstraint>> constraints = {})
     {
         std::map<int, int> pointMap;
         std::map<int, int> segmentMap;
@@ -283,10 +283,10 @@ private:
 private:
     TDF_Label _Label;
     std::map<int, gp_Pnt2d> pointsMap;
-    std::map<int, Handle(SketchSegment)> segmentsMap;
-    std::vector<Handle(SketchConstraint)> constraintsArray;
+    std::map<int, Handle<SketchSegment>> segmentsMap;
+    std::vector<Handle<SketchConstraint>> constraintsArray;
 
-    Handle(SketchElementSegment) element;
+    Handle<SketchElementSegment> element;
 
     bool _ConstraintSolverFailed;
 };

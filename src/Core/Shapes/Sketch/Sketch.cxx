@@ -16,7 +16,7 @@ int Sketch::AddPoint(const gp_Pnt2d& point, int nextIndex)
         nextIndex = PointsLabel().NbChildren();  // tag form 0 to NbChildren - 1;
     }
 
-    Handle(SketchElementPoint) element;
+    Handle<SketchElementPoint> element;
     auto newLabel = PointsLabel().FindChild(nextIndex, false);
 	if(!newLabel.IsNull())
 	{
@@ -31,7 +31,7 @@ int Sketch::AddPoint(const gp_Pnt2d& point, int nextIndex)
     return nextIndex;
 }
 
-int Sketch::AddSegment(const Handle(SketchSegment)& segment, int index)
+int Sketch::AddSegment(const Handle<SketchSegment>& segment, int index)
 {
     if(index == -1)
     {
@@ -45,7 +45,7 @@ int Sketch::AddSegment(const Handle(SketchSegment)& segment, int index)
     auto newSegment = SketchFactory::Wrap<SketchSegment>(newSegmentLabel);
     auto elementLabel = newSegment->ElementLabel();
 
-    Handle(SketchElementSegment) element;
+    Handle<SketchElementSegment> element;
     if(elementLabel.HasAttribute())
     {
         element = SketchFactory::Wrap<SketchElementSegment>(elementLabel);
@@ -59,7 +59,7 @@ int Sketch::AddSegment(const Handle(SketchSegment)& segment, int index)
     return index;
 }
 
-int Sketch::AddConstraint(const Handle(SketchConstraint)& constraint, int index)
+int Sketch::AddConstraint(const Handle<SketchConstraint>& constraint, int index)
 {
     // ÃÌº”œﬂ∂Œ
     if(index == -1)

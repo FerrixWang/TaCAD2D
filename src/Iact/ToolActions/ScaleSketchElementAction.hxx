@@ -26,7 +26,7 @@ class ScaleSketchElementAction : public ToolAction
 {
 public:
     // 构造函数，初始化动作
-    ScaleSketchElementAction(const Handle(SketchEditorTool)& sketchEditorTool)
+    ScaleSketchElementAction(const Handle<SketchEditorTool>& sketchEditorTool)
         : _SketchEditorTool(sketchEditorTool)
         , _MoveMode(-1)
         , _LengthOfOne(0.0)
@@ -63,7 +63,7 @@ public:
     double Reference() const { return _LengthOfOne; }
 
     // 获取鼠标事件数据
-    const Handle(MouseEventData)& GetMouseEventData() const { return _LastMouseEventData; }
+    const Handle<MouseEventData>& GetMouseEventData() const { return _LastMouseEventData; }
 
 protected:
     // 初始化动作，创建边界框和句柄
@@ -111,11 +111,11 @@ protected:
 
 public:
     // 信号定义
-    Signal<void(const Handle(ScaleSketchElementAction)&)> Preview;
-    Signal<void(const Handle(ScaleSketchElementAction)&)> Finished;
+    Signal<void(const Handle<ScaleSketchElementAction>&)> Preview;
+    Signal<void(const Handle<ScaleSketchElementAction>&)> Finished;
 
     // 鼠标移动事件
-    virtual bool onMouseMove(const Handle(MouseEventData)& data) override
+    virtual bool onMouseMove(const Handle<MouseEventData>& data) override
     {
         if(_MoveMode >= 0 && !m_isFinished)
         {
@@ -136,7 +136,7 @@ public:
     }
 
     // 鼠标按下事件
-    virtual bool onMousePress(const Handle(MouseEventData)& data) override
+    virtual bool onMousePress(const Handle<MouseEventData>& data) override
     {
         _MoveMode = _DetectHandle(data);
 
@@ -164,7 +164,7 @@ public:
     }
 
     // 鼠标释放事件
-    virtual bool onMouseRelease(const Handle(MouseEventData)& data) override
+    virtual bool onMouseRelease(const Handle<MouseEventData>& data) override
     {
         if(_MoveMode >= 0 && !m_isFinished)
         {
@@ -188,7 +188,7 @@ public:
 
 private:
     // 处理鼠标输入，投影到缩放轴
-    void ProcessMouseInput(const Handle(MouseEventData)& data)
+    void ProcessMouseInput(const Handle<MouseEventData>& data)
     {
         _LastMouseEventData = data;
 
@@ -221,7 +221,7 @@ private:
     }
 
     // 检测用户点击的句柄
-    int _DetectHandle(const Handle(MouseEventData)& data)
+    int _DetectHandle(const Handle<MouseEventData>& data)
     {
         for(size_t i = 0; i < _Handles.size(); ++i)
         {
@@ -315,9 +315,9 @@ private:
     }
 
 private:
-    Handle(SketchEditorTool) _SketchEditorTool; // 草图编辑工具
-    std::array<Handle(HintLine), 4> _Lines; // 边界框四边
-    std::array<Handle(Marker), 8> _Handles; // 八个缩放句柄
+    Handle<SketchEditorTool> _SketchEditorTool; // 草图编辑工具
+    std::array<Handle<HintLine>, 4> _Lines; // 边界框四边
+    std::array<Handle<Marker>, 8> _Handles; // 八个缩放句柄
     std::array<gp_XY, 8> _HandlePositions = { // 句柄相对位置
         gp_XY(0.0, 0.0), gp_XY(1.0, 0.0), gp_XY(1.0, 1.0), gp_XY(0.0, 1.0), // 角点
         gp_XY(0.5, 0.0), gp_XY(0.5, 1.0), gp_XY(0.0, 0.5), gp_XY(1.0, 0.5)  // 边中点
@@ -327,8 +327,8 @@ private:
     double _LengthOfOne; // 参考长度
     gp_Ax2d _Axis; // 缩放轴
     double _LastValue; // 上次缩放值
-    //Handle(SnapOnCurve2D) _SnapHandler; // 捕捉处理器
-    Handle(MouseEventData) _LastMouseEventData; // 最后鼠标事件数据
+    //Handle<SnapOnCurve2D> _SnapHandler; // 捕捉处理器
+    Handle<MouseEventData> _LastMouseEventData; // 最后鼠标事件数据
 };
 
 DEFINE_STANDARD_HANDLE(ScaleSketchElementAction, ToolAction)

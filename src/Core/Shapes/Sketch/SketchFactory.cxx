@@ -30,7 +30,7 @@
 
 std::map<std::string, SketchFactory::Creator> SketchFactory::_Wrappers;
 
-Handle(Standard_Transient) SketchFactory::Wrap(const TDF_Label& label)
+Handle<Standard_Transient> SketchFactory::Wrap(const TDF_Label& label)
 {
 	return Wrap(DocumentTool::GetName(label), label);
 }
@@ -71,7 +71,7 @@ void SketchFactory::Init()
 
 // 创建对象
 
-Handle(Standard_Transient) SketchFactory::Wrap(const std::string& name, const TDF_Label& label)
+Handle<Standard_Transient> SketchFactory::Wrap(const std::string& name, const TDF_Label& label)
 {
     auto it = _Wrappers.find(name);
     if(it == _Wrappers.end())

@@ -17,7 +17,7 @@ public:
 	//! Destructor
 	virtual ~SketchTool() = default;
 
-    bool Start(const Handle(SketchEditorTool)& sketchEditorTool)
+    bool Start(const Handle<SketchEditorTool>& sketchEditorTool)
     {
         _SketchEditorTool = sketchEditorTool;
         _Sketch = _SketchEditorTool->GetSketch();
@@ -51,7 +51,7 @@ public:
 
     virtual void OnStop() {}
 
-    bool StartAction(const Handle(ToolAction)& toolAction)
+    bool StartAction(const Handle<ToolAction>& toolAction)
     {
         if(_SketchEditorTool->StartToolAction(toolAction))
         {
@@ -62,7 +62,7 @@ public:
         return false;
     }
 
-    void StopAction(const Handle(ToolAction)& toolAction)
+    void StopAction(const Handle<ToolAction>& toolAction)
     {
         if(toolAction.IsNull())
         {
@@ -80,21 +80,21 @@ public:
     }
 
     // GetSketch
-	Handle(Sketch) GetSketch() const { return _Sketch; }
+	Handle<Sketch> GetSketch() const { return _Sketch; }
 
 private:
     void _StopToolActions()
     {
-        std::for_each(_Actions.rbegin(), _Actions.rend(), [this](const Handle(ToolAction)& action) {
+        std::for_each(_Actions.rbegin(), _Actions.rend(), [this](const Handle<ToolAction>& action) {
 			StopAction(action);
         });
         _Actions.clear();
     }
 
 protected:
-    std::vector<Handle(ToolAction)> _Actions;
-    Handle(SketchEditorTool) _SketchEditorTool;
-	Handle(Sketch) _Sketch;
+    std::vector<Handle<ToolAction>> _Actions;
+    Handle<SketchEditorTool> _SketchEditorTool;
+	Handle<Sketch> _Sketch;
     bool _IsActive = false;
 };
 

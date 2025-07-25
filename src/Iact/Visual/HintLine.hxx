@@ -68,7 +68,7 @@ public:
 	}
 	}
 
-	virtual Handle(AIS_InteractiveObject) AisObject() const override
+	virtual Handle<AIS_InteractiveObject> AisObject() const override
 	{
 		return _AisLine;
 	}
@@ -151,10 +151,10 @@ private:
 	}
 
 private:
-	Handle(AIS_Line) _AisLine;
-	Handle(Geom_Point) _P1;
-	Handle(Geom_Point) _P2;
-	Handle(Geom_Line) _GeomLine;
+	Handle<AIS_Line> _AisLine;
+	Handle<Geom_Point> _P1;
+	Handle<Geom_Point> _P2;
+	Handle<Geom_Line> _GeomLine;
 	HintStyles _Styles;
 	Quantity_Color _Color;
 };

@@ -16,7 +16,7 @@ class SketchPointAction : public ToolAction
 {
 public:
 	// Constructor
-	SketchPointAction(const Handle(SketchEditorTool)& sketchEditorTool);
+	SketchPointAction(const Handle<SketchEditorTool>& sketchEditorTool);
 
 	// Destructor
 	~SketchPointAction() override = default;
@@ -36,11 +36,11 @@ protected:
 	}
 
 public:
-	virtual bool onMouseMove(const Handle(MouseEventData)& theWorkspaceController) override;
+	virtual bool onMouseMove(const Handle<MouseEventData>& theWorkspaceController) override;
 
-	virtual bool onMousePress(const Handle(MouseEventData)& theWorkspaceController) override;
+	virtual bool onMousePress(const Handle<MouseEventData>& theWorkspaceController) override;
 
-	virtual bool onMouseRelease(const Handle(MouseEventData)& theWorkspaceController)override;
+	virtual bool onMouseRelease(const Handle<MouseEventData>& theWorkspaceController)override;
 
 	//Get key 
 	Aspect_VKeyFlags GetKeyFlags() const
@@ -60,23 +60,23 @@ private:
 		return true;
 	}
 
-	void ProcessMouseInput(const Handle(MouseEventData)& theWorkspaceController);
+	void ProcessMouseInput(const Handle<MouseEventData>& theWorkspaceController);
 
 	void _EnsureMarker();
 
 public:
-	Signal<void(Handle(SketchPointAction))> Preview;
-	Signal<void(Handle(SketchPointAction))> Finished;
+	Signal<void(Handle<SketchPointAction>)> Preview;
+	Signal<void(Handle<SketchPointAction>)> Finished;
 
 private:
 	gp_Pnt myPoint;
-	Handle(AIS_Point) myMarker;
-	Handle(Marker) _Marker;
-	Handle(Snap3D) _SnapHandler;
+	Handle<AIS_Point> myMarker;
+	Handle<Marker> _Marker;
+	Handle<Snap3D> _SnapHandler;
 	Aspect_VKeyFlags myKeyFlags;
 
 	bool _EnablePointMerge;
-	Handle(SketchEditorTool) _SketchEditorTool;
+	Handle<SketchEditorTool> _SketchEditorTool;
 	gp_Pnt2d _Point;
 	gp_Pnt2d _PointOnWorkingPlane;
 	int _MergeCandidateIndex = -1;

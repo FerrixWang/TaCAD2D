@@ -53,9 +53,9 @@ public:
 	virtual TDF_Label InstanceLabel() const { return _Label.Father(); }
 	virtual void ForgetAllAttributes() const { InstanceLabel().ForgetAllAttributes(true); }
 	virtual void OnPointsChanged(std::map<int, gp_Pnt2d> points, 
-								 std::map<int, Handle(SketchSegment)> segments) {}
+								 std::map<int, Handle<SketchSegment>> segments) {}
 
-	Handle(Prs3d_LineAspect) HintAspect()
+	Handle<Prs3d_LineAspect> HintAspect()
 	{
 		return new Prs3d_LineAspect(Quantity_Color(Quantity_NOC_GRAY), Aspect_TypeOfLine::Aspect_TOL_DASH, 1.0);
 	}

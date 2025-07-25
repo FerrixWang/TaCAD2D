@@ -28,19 +28,19 @@ public:
     // 元素结构体
     struct Element
     {
-        Handle(AIS_InteractiveObject) aisObject;
-        Handle(InteractiveEntity) entity;
+        Handle<AIS_InteractiveObject> aisObject;
+        Handle<InteractiveEntity> entity;
         TopoDS_Shape brepShape;
 
-        Element(Handle(AIS_InteractiveObject) ais = nullptr, Handle(InteractiveEntity) ent = nullptr, const TopoDS_Shape& shape = TopoDS_Shape())
+        Element(Handle<AIS_InteractiveObject> ais = nullptr, Handle<InteractiveEntity> ent = nullptr, const TopoDS_Shape& shape = TopoDS_Shape())
             : aisObject(ais), entity(ent), brepShape(shape)
         {}
 
-        Element(Handle(AIS_InteractiveObject) ais, const TopoDS_Shape& shape)
+        Element(Handle<AIS_InteractiveObject> ais, const TopoDS_Shape& shape)
             : aisObject(ais), brepShape(shape), entity(nullptr)
         {}
 
-        Element(Handle(InteractiveEntity) ent)
+        Element(Handle<InteractiveEntity> ent)
             : entity(ent), aisObject(nullptr)
         {}
     };
@@ -67,7 +67,7 @@ public:
         MouseEventData() : viewport_(nullptr), modifierKeys_(0) {}
 
     // 获取和设置方法
-    Handle(Viewport) GetViewport() const { return viewport_; }
+    Handle<Viewport> GetViewport() const { return viewport_; }
     Graphic3d_Vec2i GetScreenPoint() const { return screenPoint_; }
     gp_Pnt PointOnPlane() const { return pointOnPlane_; }
     unsigned int GetModifierKeys() const { return modifierKeys_; }
@@ -78,7 +78,7 @@ public:
     gp_Ax1 GetPickAxis() const;
 
     // 便捷访问检测到的元素
-    Handle(InteractiveEntity) GetDetectedEntity() const
+    Handle<InteractiveEntity> GetDetectedEntity() const
     {
         return !detectedElements_.empty() ? detectedElements_[0].entity : nullptr;
     }
@@ -88,7 +88,7 @@ public:
         return !detectedElements_.empty() ? detectedElements_[0].brepShape : TopoDS_Shape();
     }
 
-    Handle(AIS_InteractiveObject) GetDetectedAisObject() const
+    Handle<AIS_InteractiveObject> GetDetectedAisObject() const
     {
         return !detectedElements_.empty() ? detectedElements_[0].aisObject : nullptr;
     }
@@ -104,7 +104,7 @@ public:
     }
 
     // 设置基本数据
-    void Set(const Handle(Viewport)& viewport, const Graphic3d_Vec2i& screenPoint, const gp_Pnt& pointOnPlane, Aspect_VKeyFlags modifierKeys)
+    void Set(const Handle<Viewport>& viewport, const Graphic3d_Vec2i& screenPoint, const gp_Pnt& pointOnPlane, Aspect_VKeyFlags modifierKeys)
     {
         Clear();
         viewport_ = viewport;
@@ -114,8 +114,8 @@ public:
     }
 
     // 设置检测到的元素（多元素版本）
-    void SetDetectedElements(const std::vector<Handle(AIS_InteractiveObject)>& aisObjects,
-                             const std::vector<Handle(InteractiveEntity)>& entities,
+    void SetDetectedElements(const std::vector<Handle<AIS_InteractiveObject>>& aisObjects,
+                             const std::vector<Handle<InteractiveEntity>>& entities,
                              const std::vector<TopoDS_Shape>& brepShapes)
     {
         detectedElements_.clear();
@@ -123,22 +123,22 @@ public:
 
         for(size_t i = 0; i < maxSize; ++i)
         {
-            Handle(AIS_InteractiveObject) ais = (i < aisObjects.size()) ? aisObjects[i] : nullptr;
-            Handle(InteractiveEntity) ent = (i < entities.size()) ? entities[i] : nullptr;
+            Handle<AIS_InteractiveObject> ais = (i < aisObjects.size()) ? aisObjects[i] : nullptr;
+            Handle<InteractiveEntity> ent = (i < entities.size()) ? entities[i] : nullptr;
             TopoDS_Shape shape = (i < brepShapes.size()) ? brepShapes[i] : TopoDS_Shape();
             detectedElements_.emplace_back(ais, ent, shape);
         }
     }
 
     // 设置单个检测元素
-    void SetDetectedElement(Handle(AIS_InteractiveObject) aisObject, Handle(InteractiveEntity) entity, const TopoDS_Shape& brepShape)
+    void SetDetectedElement(Handle<AIS_InteractiveObject> aisObject, Handle<InteractiveEntity> entity, const TopoDS_Shape& brepShape)
     {
         detectedElements_.clear();
         detectedElements_.emplace_back(aisObject, entity, brepShape);
     }
 
 private:
-    Handle(Viewport) viewport_;           // 使用 Handle 管理 Viewport
+    Handle<Viewport> viewport_;           // 使用 Handle 管理 Viewport
     Graphic3d_Vec2i screenPoint_;                // 屏幕坐标
     gp_Pnt pointOnPlane_;                 // 平面上的3D点
     Aspect_VKeyFlags modifierKeys_;           // 修饰键（整数表示）

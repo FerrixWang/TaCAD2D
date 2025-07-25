@@ -18,26 +18,26 @@ public:
 
 	explicit VisualObject(const TDF_Label& label) {}
 
-	explicit VisualObject(const Handle(InteractiveEntity)& entity);
+	explicit VisualObject(const Handle<InteractiveEntity>& entity);
 
-	void SetWorkspaceController(const Handle(WorkspaceController)& controller)
+	void SetWorkspaceController(const Handle<WorkspaceController>& controller)
 	{
 		myController = controller;
 	}
 
-	Handle(InteractiveEntity) GetEntity() const
+	Handle<InteractiveEntity> GetEntity() const
 	{
 		return myEntity;
 	}
 
-	Handle(WorkspaceController) GetWorkspaceController() const
+	Handle<WorkspaceController> GetWorkspaceController() const
 	{
 		return myController;
 	}
 
-	Handle(AIS_InteractiveContext) AisContext() const;
+	Handle<AIS_InteractiveContext> AisContext() const;
 
-	virtual Handle(AIS_InteractiveObject) AisObject() const { return nullptr; }
+	virtual Handle<AIS_InteractiveObject> AisObject() const { return nullptr; }
 
 	void SetLocalTransformation(gp_Trsf trsf);
 
@@ -62,13 +62,13 @@ public:
 	}
 
 public:
-	Signal<void(Handle(VisualObject))> AisObjectChanged;
+	Signal<void(Handle<VisualObject>)> AisObjectChanged;
 
 private:
-	Handle(InteractiveEntity)   myEntity;     //!< The entity to be visualized
-	Handle(WorkspaceController) myController; //!< The controller to manage the visualization
-	Handle(AIS_InteractiveContext) myContext;    //!< The context to manage the visualization
-	Handle(AIS_InteractiveObject) myAISObject;   //!< The AIS object to be visualized
+	Handle<InteractiveEntity>   myEntity;     //!< The entity to be visualized
+	Handle<WorkspaceController> myController; //!< The controller to manage the visualization
+	Handle<AIS_InteractiveContext> myContext;    //!< The context to manage the visualization
+	Handle<AIS_InteractiveObject> myAISObject;   //!< The AIS object to be visualized
 };
 
 DEFINE_STANDARD_HANDLE(VisualObject, Standard_Transient)

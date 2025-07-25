@@ -14,7 +14,7 @@ public:
     static const Standard_GUID& GetID();
 
     //! Create (if not exist) ShapeAttribute from XCAFDoc on <L>.
-    static Handle(ShapeAttribute) Set(const TDF_Label& L);
+    static Handle<ShapeAttribute> Set(const TDF_Label& L);
 
     //! Creates an empty tool
     //! Creates a tool to work with a document <Doc>

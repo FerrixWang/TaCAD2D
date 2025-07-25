@@ -20,20 +20,20 @@ class ViewportWidget : public QOpenGLWidget
     Q_OBJECT
 public:
 
-    ViewportWidget(const Handle(ViewportController)& controller,
+    ViewportWidget(const Handle<ViewportController>& controller,
                    QWidget* parent = nullptr);
 
     //! Destructor.
     virtual ~ViewportWidget();
 
     //! Return Viewer.
-    const Handle(V3d_Viewer)& Viewer() const { return myViewer; }
+    const Handle<V3d_Viewer>& Viewer() const { return myViewer; }
 
     //! Return View.
-    const Handle(V3d_View)& View() const { return myView; }
+    const Handle<V3d_View>& View() const { return myView; }
 
     //! Return AIS context.
-    const Handle(AIS_InteractiveContext)& Context() const { return myContext; }
+    const Handle<AIS_InteractiveContext>& Context() const { return myContext; }
 
     //! setter
 
@@ -70,14 +70,14 @@ private:
     void updateView();
 
 private:
-    Handle(ViewportController)     m_viewportController;
+    Handle<ViewportController>     m_viewportController;
 
-    Handle(V3d_Viewer)             myViewer;
-    Handle(V3d_View)               myView;
-    Handle(AIS_InteractiveContext) myContext;
-	Handle(AIS_ViewCube)          myViewCube;
+    Handle<V3d_Viewer>             myViewer;
+    Handle<V3d_View>               myView;
+    Handle<AIS_InteractiveContext> myContext;
+	Handle<AIS_ViewCube>          myViewCube;
 
-    Handle(V3d_View)               myFocusView;
+    Handle<V3d_View>               myFocusView;
     QString myGlInfo;
     bool myIsCoreProfile;
 };

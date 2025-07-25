@@ -36,7 +36,7 @@ private slots:
     }
 
 private:
-    Handle(MessagePrinter) myPrinter;
+    Handle<MessagePrinter> myPrinter;
     boost::signals2::connection myConnection;
 };
 

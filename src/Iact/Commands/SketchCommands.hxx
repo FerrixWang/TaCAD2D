@@ -513,13 +513,13 @@ public:
 
 private:
     template<typename T>
-    static Handle(SketchEditorTool) _StartOrStopTool()
+    static Handle<SketchEditorTool> _StartOrStopTool()
     {
         auto sketchEditTool = _SketchEditorTool();
         if(sketchEditTool.IsNull())
             return nullptr;
 
-        auto currentTool = Handle(T)::DownCast(sketchEditTool->CurrentTool());
+        auto currentTool = Handle<T>::DownCast(sketchEditTool->CurrentTool());
         if(!currentTool.IsNull())
         {
             sketchEditTool->StopTool();
@@ -545,9 +545,9 @@ private:
         return sketchEditTool->StartSegmentCreation<T>(continuesModeEnabled);
     }
 
-    static Handle(SketchEditorTool) _SketchEditorTool()
+    static Handle<SketchEditorTool> _SketchEditorTool()
     {
-        return Handle(SketchEditorTool)::DownCast(
+        return Handle<SketchEditorTool>::DownCast(
             InteractiveContext::Current()->GetWorkspaceController()->CurrentTool()
         );
     }

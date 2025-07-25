@@ -30,7 +30,7 @@ public:
 	DEFINE_ATTRIBUTE_ON_CHILD(4, TDataStd_Name, Viewports)
 
 public:
-	Workspace(const Handle(Document)& document, const TDF_Label& theLabel = {});
+	Workspace(const Handle<Document>& document, const TDF_Label& theLabel = {});
 	~Workspace() {};
 
 	TDF_Label Label() const { return myLabel; }
@@ -40,11 +40,11 @@ public:
 	void InitV3dViewer();
 	void InitAisContext();
 
-	Handle(V3d_Viewer) V3dViewer() const;
+	Handle<V3d_Viewer> V3dViewer() const;
 
-	Handle(AIS_InteractiveContext) AisContext() const;
+	Handle<AIS_InteractiveContext> AisContext() const;
 
-	std::vector<Handle(Viewport)>& Viewports();
+	std::vector<Handle<Viewport>>& Viewports();
 	
 	void UpdateCurrentViewer();
 
@@ -72,12 +72,12 @@ public:
 	gp_Pln WorkingPlane() const;
 
 	void SetDefaultWorkingPlane(AIS_TypeOfPlane type);
-	bool ProjectToGrid(const Handle(Viewport)& viewport, int screenX, int screenY, gp_Pnt& pnt);
+	bool ProjectToGrid(const Handle<Viewport>& viewport, int screenX, int screenY, gp_Pnt& pnt);
 
 	gp_Pnt2d ComputeGridPoint(const gp_Pnt2d& uv);
 
-	Handle(WorkingContext) GetWorkingContext() const;
-	Handle(WorkingContext) GetGlobalWorkingContext() const
+	Handle<WorkingContext> GetWorkingContext() const;
+	Handle<WorkingContext> GetGlobalWorkingContext() const
 	{
 		return myGlobalWorkingContext;
 	}
@@ -89,20 +89,20 @@ private:
 	void _RaiseGridChanged() { GridChanged(this); }
 
 public:
-	Signal<void(Handle(Workspace))> GridChanged;
+	Signal<void(Handle<Workspace>)> GridChanged;
 
 private:
 	TDF_Label myLabel;
 
-	std::vector<Handle(Viewport)> myViewports;  // List of Viewports in the workspace
+	std::vector<Handle<Viewport>> myViewports;  // List of Viewports in the workspace
 
-	Handle(V3d_Viewer) myV3dViewer;  // 3D viewer handle
-	Handle(AIS_InteractiveContext) myAisContext;  // AIS context handle
+	Handle<V3d_Viewer> myV3dViewer;  // 3D viewer handle
+	Handle<AIS_InteractiveContext> myAisContext;  // AIS context handle
 
-	Handle(Document) myDocument;
+	Handle<Document> myDocument;
 
-	Handle(WorkingContext) myCurrentWorkingContext;
-	Handle(WorkingContext) myGlobalWorkingContext;
+	Handle<WorkingContext> myCurrentWorkingContext;
+	Handle<WorkingContext> myGlobalWorkingContext;
 };
 
 DEFINE_STANDARD_HANDLE(Workspace, Standard_Transient)

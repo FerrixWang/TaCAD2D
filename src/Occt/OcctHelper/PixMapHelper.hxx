@@ -12,7 +12,7 @@
 class PixMapHelper
 {
 public:
-	static Handle(Image_PixMap) convertFromBitmap(const QImage& object);
+	static Handle<Image_PixMap> convertFromBitmap(const QImage& object);
 };
 
 #endif  // OCCT_OCCTHELPER_PIXMAPHELPER_H_

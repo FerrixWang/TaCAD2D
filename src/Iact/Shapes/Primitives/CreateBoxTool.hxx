@@ -24,12 +24,12 @@ public:
 
     CreateBoxTool() = default;
 
-    void _PivotAction_Preview(const Handle(PointAction)& action);
-    void _PivotAction_Finished(const Handle(PointAction)& action);
-    void _BaseRectAction_Preview(const Handle(PointAction)& action);
-    void _BaseRectAction_Finished(const Handle(PointAction)& action);
-    void _HeightAction_Preview(const Handle(PointAction)& action);
-    void _HeightAction_Finished(const Handle(PointAction)& action);
+    void _PivotAction_Preview(const Handle<PointAction>& action);
+    void _PivotAction_Finished(const Handle<PointAction>& action);
+    void _BaseRectAction_Preview(const Handle<PointAction>& action);
+    void _BaseRectAction_Finished(const Handle<PointAction>& action);
+    void _HeightAction_Preview(const Handle<PointAction>& action);
+    void _HeightAction_Finished(const Handle<PointAction>& action);
 
 protected:
     bool onStart() override;
@@ -37,7 +37,7 @@ protected:
 private:
     Phase myCurrentPhase;
 
-    Handle(NewBox) m_Box;
+    Handle<NewBox> m_Box;
     gp_Pnt _PointPlane1;
     gp_Pnt _PointPlane2;
 	gp_Pln _Plane;

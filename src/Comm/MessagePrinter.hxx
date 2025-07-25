@@ -13,7 +13,7 @@ class MessagePrinter : public Message_Printer
 public:
     MessagePrinter()
     {
-        Handle(Message_Messenger) messenger = Message::DefaultMessenger();
+        Handle<Message_Messenger> messenger = Message::DefaultMessenger();
         messenger->AddPrinter(this);
     }
 

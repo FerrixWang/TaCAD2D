@@ -32,11 +32,11 @@ protected:
 	}
 
 public:
-	virtual bool onMouseMove(const Handle(MouseEventData)& theWorkspaceController) override;
+	virtual bool onMouseMove(const Handle<MouseEventData>& theWorkspaceController) override;
 
-	virtual bool onMousePress(const Handle(MouseEventData)& theWorkspaceController) override;
+	virtual bool onMousePress(const Handle<MouseEventData>& theWorkspaceController) override;
 
-	virtual bool onMouseRelease(const Handle(MouseEventData)& theWorkspaceController)override;
+	virtual bool onMouseRelease(const Handle<MouseEventData>& theWorkspaceController)override;
 
 	//Get key 
 	Aspect_VKeyFlags GetKeyFlags() const
@@ -50,19 +50,19 @@ private:
 		return true; 
 	}
 
-	void ProcessMouseInput(const Handle(MouseEventData)& theWorkspaceController);
+	void ProcessMouseInput(const Handle<MouseEventData>& theWorkspaceController);
 
 	void _EnsureMarker();
 
 public:
-	Signal<void(Handle(PointAction))> Preview;
-	Signal<void(Handle(PointAction))> Finished;
+	Signal<void(Handle<PointAction>)> Preview;
+	Signal<void(Handle<PointAction>)> Finished;
 
 private:
 	gp_Pnt myPoint;
-	Handle(AIS_Point) myMarker;
-	Handle(Marker) _Marker;
-	Handle(Snap3D) _SnapHandler;
+	Handle<AIS_Point> myMarker;
+	Handle<Marker> _Marker;
+	Handle<Snap3D> _SnapHandler;
 	Aspect_VKeyFlags myKeyFlags;
 };
 

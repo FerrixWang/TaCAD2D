@@ -74,7 +74,7 @@ public:
     }
 
 private:
-    void _PointAction_Preview(const Handle(SketchPointAction)& sender)
+    void _PointAction_Preview(const Handle<SketchPointAction>& sender)
     {
         auto point = sender->Point();
 
@@ -95,7 +95,7 @@ private:
         _Coord2DHudElement->setValues(point.X(), point.Y());
     }
 
-    void _PointAction_Finished(const Handle(SketchPointAction)& sender)
+    void _PointAction_Finished(const Handle<SketchPointAction>& sender)
     {
         if(_Segment.IsNull())
         {
@@ -154,9 +154,9 @@ public:
 private:    
     std::vector<int> _MergePointIndices = {-1, -1};
     std::map<int, gp_Pnt2d> _Points;
-    Handle(SketchSegmentCircle) _Segment;
-    Handle(SketchElementSegment) _Element;
-    Handle(SketchPointAction) _PointAction;
+    Handle<SketchSegmentCircle> _Segment;
+    Handle<SketchElementSegment> _Element;
+    Handle<SketchPointAction> _PointAction;
     Coord2DHudElement* _Coord2DHudElement;
     ValueHudElement* _ValueHudElement;
     Marker* _Marker;

@@ -20,7 +20,7 @@ public:
 
     DEFINE_STANDARD_RTTIEXT(Snap3D, SnapBase)
 
-        SnapInfo Snap(const Graphic3d_Vec2i& screenPoint, const TopoDS_Shape& shape, const Handle(AIS_InteractiveObject)& aisObject)
+        SnapInfo Snap(const Graphic3d_Vec2i& screenPoint, const TopoDS_Shape& shape, const Handle<AIS_InteractiveObject>& aisObject)
     {
         SnapInfo snapInfo;
 
@@ -41,7 +41,7 @@ public:
         return snapInfo;
     }
 
-    SnapInfo Snap(const Handle(MouseEventData)& controller);
+    SnapInfo Snap(const Handle<MouseEventData>& controller);
     SnapInfo _SnapGrid(Graphic3d_Vec2i point);
 };
 

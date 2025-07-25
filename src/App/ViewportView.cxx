@@ -78,7 +78,7 @@ void ViewportView::setupConnection()
         std::bind(&ViewportView::onWorkspaceControllerChanged, this, std::placeholders::_1));
 }
 
-void ViewportView::onWorkspaceControllerChanged(const Handle(WorkspaceController)& WCer)
+void ViewportView::onWorkspaceControllerChanged(const Handle<WorkspaceController>& WCer)
 {
     if(m_messageBar != nullptr)
     {

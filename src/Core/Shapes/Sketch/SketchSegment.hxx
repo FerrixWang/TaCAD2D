@@ -75,10 +75,10 @@ public:
 	virtual TDF_Label InstanceLabel() const { return _Label.Father(); };
 	virtual int StartPoint() const { return -1; }
 	virtual int EndPoint() const { return -1; }
-	virtual Handle(Geom2d_Curve) MakeCurve(const std::map<int, gp_Pnt2d>& points) = 0;
+	virtual Handle<Geom2d_Curve> MakeCurve(const std::map<int, gp_Pnt2d>& points) = 0;
 	virtual TopoDS_Wire CreateHintEdge(const std::map<int, gp_Pnt2d>& points) { return {}; }
 
-	virtual Handle(SketchSegment) Clone(
+	virtual Handle<SketchSegment> Clone(
 		const TDF_Label& label = DocumentTool::TrashLabel().NewChild()) const;
 
 	TDF_Label Label() const { return _Label; }
@@ -89,12 +89,12 @@ public:
 
 	int Point(int index) const { return PointsAttribute()->Value(index); }
 
-	Handle(Prs3d_LineAspect) HintAspect()
+	Handle<Prs3d_LineAspect> HintAspect()
 	{
 		return new Prs3d_LineAspect(Quantity_Color(Quantity_NOC_GRAY), Aspect_TypeOfLine::Aspect_TOL_DASH, 1.0);
 	}
 
-	bool IsConnected(const Handle(SketchSegment)& other)
+	bool IsConnected(const Handle<SketchSegment>& other)
 	{
 		int s1 = StartPoint();
 		int s2 = other->StartPoint();
@@ -127,7 +127,7 @@ public:
 
 private:
 	TDF_Label _Label;
-	Handle(Geom2d_Curve) CachedCurve;
+	Handle<Geom2d_Curve> CachedCurve;
 };
 
 DEFINE_STANDARD_HANDLE(SketchSegment, Standard_Transient)

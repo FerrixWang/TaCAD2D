@@ -33,11 +33,11 @@ void Application::InitDriver(Document::Format format)
 	}
 }
 
-Handle(Document) Application::NewModel(Document::Format theFormat)
+Handle<Document> Application::NewModel(Document::Format theFormat)
 {
 	InitDriver(theFormat);
 
-	Handle(Document) aNewModel = new Document(theFormat);
+	Handle<Document> aNewModel = new Document(theFormat);
 	CDF_Application::Open(aNewModel);
 
 	aNewModel->SetUndoLimit(30);
@@ -48,12 +48,12 @@ Handle(Document) Application::NewModel(Document::Format theFormat)
 	return aNewModel;
 }
 
-Handle(Document) Application::OpenModel(const std::string& thePath, Document::Format theFormat)
+Handle<Document> Application::OpenModel(const std::string& thePath, Document::Format theFormat)
 {
 	InitDriver(theFormat);
 	try
 	{
-		Handle(Document) aDoc = new Document(theFormat);
+		Handle<Document> aDoc = new Document(theFormat);
 		if(this->Open(thePath.c_str(), aDoc) == PCDM_RS_OK)
 		{
 			AppContext::Current()->SetDocument(aDoc);

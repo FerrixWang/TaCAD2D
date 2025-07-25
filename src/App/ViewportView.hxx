@@ -25,7 +25,7 @@ public:
 
     void setupConnection();
 
-    void onWorkspaceControllerChanged(const Handle(WorkspaceController)& WCer);
+    void onWorkspaceControllerChanged(const Handle<WorkspaceController>& WCer);
 
 private:
     // Update Info handling

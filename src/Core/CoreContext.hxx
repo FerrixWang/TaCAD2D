@@ -24,9 +24,9 @@ public:
 		return s_current;
 	}
 
-	Handle(Document) GetDocument() const { return m_document; }
-	Handle(Workspace) workspace() const { return m_workspace; }
-	Handle(Viewport) viewport() const { return m_viewport; }
+	Handle<Document> GetDocument() const { return m_document; }
+	Handle<Workspace> workspace() const { return m_workspace; }
+	Handle<Viewport> viewport() const { return m_viewport; }
 
 	TDF_Label MainLabel() const
 	{
@@ -43,7 +43,7 @@ public:
 	}
 
 public:
-	virtual void SetDocument(const Handle(Document)& document)
+	virtual void SetDocument(const Handle<Document>& document)
 	{
 		if(!document.IsNull() && m_document != document)
 		{
@@ -61,7 +61,7 @@ public:
 	}
 
 protected:
-	virtual void SetWorkspace(const Handle(Workspace)& workspace)
+	virtual void SetWorkspace(const Handle<Workspace>& workspace)
 	{
 		if (!workspace.IsNull() && m_workspace != workspace) {
 			m_workspace = workspace;
@@ -72,7 +72,7 @@ protected:
 		}
  	}
 
-	virtual void SetViewport(const Handle(Viewport)& viewport)
+	virtual void SetViewport(const Handle<Viewport>& viewport)
 	{
 		if(!viewport.IsNull() && m_viewport != viewport)
 		{
@@ -85,14 +85,14 @@ protected:
 	std::shared_ptr<QSettings> GetLocalSettings(const std::string& name);
 
 public:
-	Signal<void(const Handle(Document)&)> documentChanged;
-	Signal<void(const Handle(Workspace)&)> workspaceChanged;
-	Signal<void(const Handle(Viewport)&)> viewportChanged;
+	Signal<void(const Handle<Document>&)> documentChanged;
+	Signal<void(const Handle<Workspace>&)> workspaceChanged;
+	Signal<void(const Handle<Viewport>&)> viewportChanged;
 
 protected:
-	Handle(Document) m_document;
-	Handle(Workspace) m_workspace;
-	Handle(Viewport) m_viewport;
+	Handle<Document> m_document;
+	Handle<Workspace> m_workspace;
+	Handle<Viewport> m_viewport;
 
 protected:
 	CoreContext();

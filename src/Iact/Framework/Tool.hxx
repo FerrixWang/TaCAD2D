@@ -18,7 +18,7 @@ public:
 public:
 
 	//! current toolaction	
-	Handle(ToolAction) currentAction() const
+	Handle<ToolAction> currentAction() const
 	{
 		return m_toolActions.empty() ? nullptr : m_toolActions.front();
 	}
@@ -56,7 +56,7 @@ protected:
 	virtual bool onCancel() { return true; }
 
 	//! start toolaction
-	bool startAction(const Handle(ToolAction)& theToolAction, bool exclusive = true)
+	bool startAction(const Handle<ToolAction>& theToolAction, bool exclusive = true)
 	{
 		// if contains toolaction, return true
 		if(std::find(m_toolActions.begin(), m_toolActions.end(), theToolAction) != m_toolActions.end())
@@ -89,7 +89,7 @@ protected:
 
 	//! stop toolaction
 	
-	void stopAction(const Handle(ToolAction)& theToolAction)
+	void stopAction(const Handle<ToolAction>& theToolAction)
 	{
 		if(theToolAction.IsNull())
 			return;
@@ -114,13 +114,13 @@ protected:
 	void RestoreAllVisualShapes()
 	{}
 
-	virtual std::vector<Handle(WorkspaceControl)> children() override 
+	virtual std::vector<Handle<WorkspaceControl>> children() override 
 	{ 
 		// return all toolactions with convert to WorkspaceControl
-		std::vector<Handle(WorkspaceControl)> arr;
+		std::vector<Handle<WorkspaceControl>> arr;
 		// using stl transform to copy and convert with same order
 		std::transform(m_toolActions.begin(), m_toolActions.end(), std::back_inserter(arr),
-					   [](const Handle(ToolAction)& action) { return Handle(WorkspaceControl)::DownCast(action); });
+					   [](const Handle<ToolAction>& action) { return Handle<WorkspaceControl>::DownCast(action); });
 		return arr;
 	}
 
@@ -133,12 +133,12 @@ protected:
 	}
 
 public:
-	Signal<void(const Handle(ToolAction)&)> toolActionChanged;
+	Signal<void(const Handle<ToolAction>&)> toolActionChanged;
 
 private:
 	bool m_isActive = false;
 
-	std::vector<Handle(ToolAction)> m_toolActions;
+	std::vector<Handle<ToolAction>> m_toolActions;
 };
 
 DEFINE_STANDARD_HANDLE(Tool, WorkspaceControl)
