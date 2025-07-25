@@ -8,8 +8,9 @@ on:
 
 env:
   BUILD_TYPE: Release
-  PYTHON_VERSION: '3.12'  # 使用 Python 3.12 以确保 pyzstd 兼容性
+  PYTHON_VERSION: '3.12'  # 保持 Python 3.12 以确保 pyzstd 兼容性
   QT_VERSION: '6.7.2'     # 明确指定 Qt 版本
+  QT_ARCH: 'win64_msvc2022_64'  # 指定架构，待验证
 
 jobs:
   build:
@@ -24,20 +25,21 @@ jobs:
       uses: actions/cache@v4
       with:
         path: ${{github.workspace}}/Qt
-        key: ${{runner.os}}-qt-${{env.QT_VERSION}}-${{hashFiles('**/CMakeLists.txt')}}
+        key: ${{runner.os}}-qt-${{env.QT_VERSION}}-${{env.QT_ARCH}}-${{hashFiles('**/CMakeLists.txt')}}
         restore-keys: ${{runner.os}}-qt-${{env.QT_VERSION}}-
 
     - name: 设置 Python
       uses: actions/setup-python@v5
       with:
         python-version: ${{env.PYTHON_VERSION}}
-        cache: 'pip'  # 缓存 Python 依赖
+        cache: 'pip'
         cache-dependency-path: '**/requirements.txt'  # 调整为你的依赖文件路径
 
     - name: 安装 Python 依赖
       run: |
         python -m pip install --upgrade pip setuptools wheel
         pip install pyzstd==0.17.0 --only-binary :all: || pip install zstandard
+        pip install aqtinstall==3.3.0
       shell: cmd
 
     - name: 验证 Python 库
@@ -45,21 +47,29 @@ jobs:
         dir "C:\hostedtoolcache\windows\Python\${{env.PYTHON_VERSION}}*\x64\libs"
         dir "C:\hostedtoolcache\windows\Python\${{env.PYTHON_VERSION}}*\x64\PCbuild\amd64"
       shell: cmd
-      continue-on-error: true  # 即使目录缺失也继续，方便调试
+      continue-on-error: true
+
+    - name: 检查 Qt 架构和模块
+      run: |
+        python -m aqt list-qt windows desktop --arch ${{env.QT_VERSION}}
+        python -m aqt list-qt windows desktop --modules ${{env.QT_VERSION}} ${{env.QT_ARCH}}
+      shell: cmd
+      continue-on-error: true  # 调试用，显示可用架构和模块
 
     - name: 安装 Qt
       uses: jurplel/install-qt-action@v4
       with:
         version: ${{env.QT_VERSION}}
-        arch: win64_msvc2022_64
-        modules: qtbase qttools  # 明确指定所需模块
+        arch: ${{env.QT_ARCH}}
+        modules: qtbase qttools  # 修正模块名，去掉 qt_base
         cache: true
-        cache-key-prefix: qt-${{env.QT_VERSION}}
-        set-env: true  # 设置 Qt 环境变量
+        cache-key-prefix: qt-${{env.QT_VERSION}}-${{env.QT_ARCH}}
+        set-env: true
+        dir: ${{github.workspace}}/Qt
 
     - name: 配置 CMake
       run: |
-        cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -A x64 -DCMAKE_PREFIX_PATH=${{github.workspace}}/Qt/${{env.QT_VERSION}}/msvc2022_64
+        cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -A x64 -DCMAKE_PREFIX_PATH=${{github.workspace}}/Qt/${{env.QT_VERSION}}/${{env.QT_ARCH}}
       shell: cmd
 
     - name: 构建
