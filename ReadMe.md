@@ -1,4 +1,5 @@
 ﻿# Tacad2D
+[![CMake on Windows](https://github.com/FerrixWang/Tacad2D/actions/workflows/cmake-single-platform.yml/badge.svg)](https://github.com/FerrixWang/Tacad2D/actions/workflows/cmake-single-platform.yml)
 
 **Tacad2D: Cross-Platform 2D CAD Powered by OCCT OCAF**
 
