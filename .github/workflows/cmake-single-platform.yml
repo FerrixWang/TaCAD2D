@@ -8,62 +8,66 @@ on:
 
 env:
   BUILD_TYPE: Release
-  PYTHON_VERSION: '3.12'  # Use Python 3.12 for better compatibility with pyzstd
+  PYTHON_VERSION: '3.12'  # 使用 Python 3.12 以确保 pyzstd 兼容性
+  QT_VERSION: '6.7.2'     # 明确指定 Qt 版本
 
 jobs:
   build:
     runs-on: windows-latest
 
     steps:
-    - name: Checkout repository
+    - name: 检出代码库
       uses: actions/checkout@v4
 
-    - name: Cache Qt
+    - name: 缓存 Qt
       id: cache-qt
       uses: actions/cache@v4
       with:
         path: ${{github.workspace}}/Qt
-        key: ${{runner.os}}-qt-${{hashFiles('**/CMakeLists.txt')}}
-        restore-keys: ${{runner.os}}-qt-
+        key: ${{runner.os}}-qt-${{env.QT_VERSION}}-${{hashFiles('**/CMakeLists.txt')}}
+        restore-keys: ${{runner.os}}-qt-${{env.QT_VERSION}}-
 
-    - name: Install Qt
-      uses: jurplel/install-qt-action@v4
-      with:
-        version: '6.7.2'  # Specify a specific Qt version for consistency
-        arch: win64_msvc2022_64
-        cached: ${{steps.cache-qt.outputs.cache-hit}}
-
-    - name: Set up Python
+    - name: 设置 Python
       uses: actions/setup-python@v5
       with:
         python-version: ${{env.PYTHON_VERSION}}
-        cache: 'pip'  # Cache Python dependencies
-        cache-dependency-path: '**/requirements.txt'  # Adjust if requirements file exists
+        cache: 'pip'  # 缓存 Python 依赖
+        cache-dependency-path: '**/requirements.txt'  # 调整为你的依赖文件路径
 
-    - name: Install Python dependencies
+    - name: 安装 Python 依赖
       run: |
         python -m pip install --upgrade pip setuptools wheel
-        pip install pyzstd --only-binary :all: || pip install zstandard
-      shell: cmd  # Ensure Windows-compatible shell
+        pip install pyzstd==0.17.0 --only-binary :all: || pip install zstandard
+      shell: cmd
 
-    - name: Verify Python libraries
+    - name: 验证 Python 库
       run: |
         dir "C:\hostedtoolcache\windows\Python\${{env.PYTHON_VERSION}}*\x64\libs"
         dir "C:\hostedtoolcache\windows\Python\${{env.PYTHON_VERSION}}*\x64\PCbuild\amd64"
       shell: cmd
-      continue-on-error: true  # Continue even if directories are missing for debugging
+      continue-on-error: true  # 即使目录缺失也继续，方便调试
 
-    - name: Configure CMake
+    - name: 安装 Qt
+      uses: jurplel/install-qt-action@v4
+      with:
+        version: ${{env.QT_VERSION}}
+        arch: win64_msvc2022_64
+        modules: qtbase qttools  # 明确指定所需模块
+        cache: true
+        cache-key-prefix: qt-${{env.QT_VERSION}}
+        set-env: true  # 设置 Qt 环境变量
+
+    - name: 配置 CMake
       run: |
-        cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -A x64
+        cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -A x64 -DCMAKE_PREFIX_PATH=${{github.workspace}}/Qt/${{env.QT_VERSION}}/msvc2022_64
       shell: cmd
 
-    - name: Build
+    - name: 构建
       run: |
         cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} --parallel
       shell: cmd
 
-    - name: Test
+    - name: 测试
       working-directory: ${{github.workspace}}/build
       run: |
         ctest -C ${{env.BUILD_TYPE}} --output-on-failure
