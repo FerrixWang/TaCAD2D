@@ -2,66 +2,89 @@ name: CMake on Windows
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "main" ]  # Changed to main as per convention
   pull_request:
-    branches: [ "master" ]
+    branches: [ "main" ]
 
 env:
   BUILD_TYPE: Release
-  PYTHON_VERSION: '3.12'  # 保持 Python 3.12 以确保 pyzstd 兼容性
-  QT_VERSION: '6.7.2'     # 明确指定 Qt 版本
-  QT_ARCH: 'win64_msvc2022_64'  # 指定架构，待验证
+  PYTHON_VERSION: '3.12'    # Consistent Python version for pyzstd
+  QT_VERSION: '6.7.2'       # Synchronized Qt version
+  QT_ARCH: 'win64_msvc2022_64'
 
 jobs:
   build:
     runs-on: windows-latest
 
     steps:
-    - name: 检出代码库
+    - name: Checkout repository
       uses: actions/checkout@v4
-      
-    - name: 清理 Qt 安装目录
-      run: |
-        if exist "${{github.workspace}}\Qt" rmdir /s /q "${{github.workspace}}\Qt"
+      with:
+        fetch-depth: 0  # Full history for better cache key generation
+
+    - name: Setup cache for Qt
+      id: cache-qt
+      uses: actions/cache@v4
+      with:
+        path: ${{ github.workspace }}/Qt
+        key: ${{ runner.os }}-qt-${{ env.QT_VERSION }}-${{ env.QT_ARCH }}-${{ hashFiles('**/*.cmake', '**/*.pro') }}
+        restore-keys: |
+          ${{ runner.os }}-qt-${{ env.QT_VERSION }}-${{ env.QT_ARCH }}-
+
+    - name: Clean Qt installation directory
+      if: steps.cache-qt.outputs.cache-hit != 'true'
+      run: if exist "${{ github.workspace }}\Qt" rmdir /s /q "${{ github.workspace }}\Qt"
       shell: cmd
-      continue-on-error: true
-      
+
     - name: Install Qt
+      if: steps.cache-qt.outputs.cache-hit != 'true'
       uses: jurplel/install-qt-action@v4
       with:
-        version: '6.8.3'
-        host: 'windows'
-        target: 'desktop'
-        arch: 'win64_msvc2022_64'
-        dir: '${{ github.workspace }}/example/'
-        install-deps: 'true'
-        modules: 'qtcharts qtwebengine'
-        archives: 'qtbase qtsvg'
-        cache: 'false'
-        cache-key-prefix: 'install-qt-action'
-        setup-python: 'true'
-        tools: 'tools_ifw tools_qtcreator,qt.tools.qtcreator'
-        set-env: 'true'
-        tools-only: 'false'
-        aqtversion: '==3.3.*'
-        py7zrversion: '==1.0.*'
-        extra: '--external 7z'
+        version: ${{ env.QT_VERSION }}  # Use environment variable for consistency
+        host: windows
+        target: desktop
+        arch: ${{ env.QT_ARCH }}
+        dir: ${{ github.workspace }}/Qt/
+        install-deps: true
+        modules: qtcharts qtwebengine
+        archives: qtbase qtsvg
+        cache: false  # Caching handled by actions/cache
+        setup-python: true
+        tools: tools_ifw,tools_qtcreator,qt.tools.qtcreator
+        set-env: true
+        aqtversion: ==3.3.*
+        extra: --external 7z
         use-official: false
         email: ${{ secrets.QT_EMAIL }}
         pw: ${{ secrets.QT_PW }}
 
-    - name: 配置 CMake
+    - name: Setup MSVC
+      uses: ilammy/msvc-dev-cmd@v1
+      with:
+        arch: x64
+
+    - name: Configure CMake
       run: |
-        cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -A x64 -DCMAKE_PREFIX_PATH=${{github.workspace}}/Qt/${{env.QT_VERSION}}/${{env.QT_ARCH}}
+        cmake -S . -B build \
+          -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }} \
+          -DCMAKE_PREFIX_PATH="${{ github.workspace }}/Qt/${{ env.QT_VERSION }}/${{ env.QT_ARCH }}" \
+          -A x64
       shell: cmd
 
-    - name: 构建
+    - name: Build
       run: |
-        cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} --parallel
+        cmake --build build --config ${{ env.BUILD_TYPE }} --parallel 4
       shell: cmd
 
-    - name: 测试
-      working-directory: ${{github.workspace}}/build
+    - name: Test
+      working-directory: ${{ github.workspace }}/build
       run: |
-        ctest -C ${{env.BUILD_TYPE}} --output-on-failure
+        ctest --build-config ${{ env.BUILD_TYPE }} --output-on-failure --parallel 4
       shell: cmd
+
+    - name: Cleanup
+      if: always()
+      run: |
+        if exist "${{ github.workspace }}\build" rmdir /s /q "${{ github.workspace }}\build"
+      shell: cmd
+      continue-on-error: true
