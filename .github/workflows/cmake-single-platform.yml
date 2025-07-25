@@ -10,10 +10,6 @@ on:
 
 env:
   BUILD_TYPE: Release
-  QT_VERSION: 6.7.2
-  QT_BASE_DIR: C:/Qt
-  QT_CMAKE_PATH:  C:/Qt/Tools/CMake_6.7.2
-  QT_DIR:  C:/Qt/6.7.2/msvc2022_64
 
 jobs:
   build:
@@ -28,9 +24,7 @@ jobs:
     - name: Install Qt
       uses: jurplel/install-qt-action@v2
       with:
-        version: ${{ env.QT_VERSION }}
         arch: win64_msvc2022_64
-        dir: ${{ env.QT_BASE_DIR }}
 
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
