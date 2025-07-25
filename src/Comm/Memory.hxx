@@ -8,21 +8,18 @@
 
 #include <Standard_Handle.hxx>
 
-// #define Handle(Class) opencascade::handle<Class>
+#ifdef Handle
+    #undef Handle
+#endif
+
 // Macro definitions for memory management
 // Use Handle for OpenCascade objects (T must derive from Standard_Transient)
 // Use Shared and Weaker for C++ standard smart pointers
 // Use Unique for exclusive ownership with std::unique_ptr
-
-//#define Handle(Class) (opencascade::handle<Class>)
+#define Handle(Class) opencascade::handle<Class>
 #define Shared(Class) std::shared_ptr<Class>
 #define Weaker(Class) std::weak_ptr<Class>
 #define Unique(Class) std::unique_ptr<Class>
-
-template<typename T, typename... Args>
-Shared(T) MakeShared(Args&&... args) {
-    return std::make_shared<T>(std::forward<Args>(args)...);
-}
 
 // Constructs an object of type 'T' wrapped in an OpenCascade handle
 // Note: Standard_Transient must be a base class of 'T'
@@ -32,6 +29,11 @@ Handle(T) MakeHandle(Args&&... args) {
     static_assert(std::is_base_of<Standard_Transient, T>::value,
         "T must be derived from Standard_Transient");
     return new T(std::forward<Args>(args)...);
+}
+
+template<typename T, typename... Args>
+Shared(T) MakeShared(Args&&... args) {
+    return std::make_shared<T>(std::forward<Args>(args)...);
 }
 
 // Constructs an object of type 'T' wrapped in a std::unique_ptr
