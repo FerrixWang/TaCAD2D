@@ -55,8 +55,6 @@ jobs:
         aqtversion: ==3.3.*
         extra: --external 7z
         use-official: false
-        email: ${{ secrets.QT_EMAIL }}
-        pw: ${{ secrets.QT_PW }}
 
     - name: Setup MSVC
       uses: ilammy/msvc-dev-cmd@v1
