@@ -19,53 +19,30 @@ jobs:
     steps:
     - name: 检出代码库
       uses: actions/checkout@v4
-
-    - name: 缓存 Qt
-      id: cache-qt
-      uses: actions/cache@v4
-      with:
-        path: ${{github.workspace}}/Qt
-        key: ${{runner.os}}-qt-${{env.QT_VERSION}}-${{env.QT_ARCH}}-${{hashFiles('**/CMakeLists.txt')}}
-        restore-keys: ${{runner.os}}-qt-${{env.QT_VERSION}}-
-
-    - name: 设置 Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: ${{env.PYTHON_VERSION}}
-        cache: 'pip'
-        cache-dependency-path: '**/requirements.txt'  # 调整为你的依赖文件路径
-
-    - name: 安装 Python 依赖
-      run: |
-        python -m pip install --upgrade pip setuptools wheel
-        pip install pyzstd==0.17.0 --only-binary :all: || pip install zstandard
-        pip install aqtinstall==3.3.0
-      shell: cmd
-
-    - name: 验证 Python 库
-      run: |
-        dir "C:\hostedtoolcache\windows\Python\${{env.PYTHON_VERSION}}*\x64\libs"
-        dir "C:\hostedtoolcache\windows\Python\${{env.PYTHON_VERSION}}*\x64\PCbuild\amd64"
-      shell: cmd
-      continue-on-error: true
-
-    - name: 检查 Qt 架构和模块
-      run: |
-        python -m aqt list-qt windows desktop --arch ${{env.QT_VERSION}}
-        python -m aqt list-qt windows desktop --modules ${{env.QT_VERSION}} ${{env.QT_ARCH}}
-      shell: cmd
-      continue-on-error: true  # 调试用，显示可用架构和模块
-
-    - name: 安装 Qt
+      
+    - name: Install Qt
       uses: jurplel/install-qt-action@v4
       with:
-        version: ${{env.QT_VERSION}}
-        arch: ${{env.QT_ARCH}}
-        modules: qtbase qttools  # 修正模块名，去掉 qt_base
-        cache: true
-        cache-key-prefix: qt-${{env.QT_VERSION}}-${{env.QT_ARCH}}
-        set-env: true
-        dir: ${{github.workspace}}/Qt
+        version: '6.8.3'
+        host: 'windows'
+        target: 'desktop'
+        arch: 'win64_msvc2022_64'
+        dir: '${{ github.workspace }}/example/'
+        install-deps: 'true'
+        modules: 'qtcharts qtwebengine'
+        archives: 'qtbase qtsvg'
+        cache: 'false'
+        cache-key-prefix: 'install-qt-action'
+        setup-python: 'true'
+        tools: 'tools_ifw tools_qtcreator,qt.tools.qtcreator'
+        set-env: 'true'
+        tools-only: 'false'
+        aqtversion: '==3.3.*'
+        py7zrversion: '==1.0.*'
+        extra: '--external 7z'
+        use-official: false
+        email: ${{ secrets.QT_EMAIL }}
+        pw: ${{ secrets.QT_PW }}
 
     - name: 配置 CMake
       run: |
