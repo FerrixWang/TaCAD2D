@@ -20,6 +20,12 @@ jobs:
     - name: 检出代码库
       uses: actions/checkout@v4
       
+    - name: 清理 Qt 安装目录
+      run: |
+        if exist "${{github.workspace}}\Qt" rmdir /s /q "${{github.workspace}}\Qt"
+      shell: cmd
+      continue-on-error: true
+      
     - name: Install Qt
       uses: jurplel/install-qt-action@v4
       with:
