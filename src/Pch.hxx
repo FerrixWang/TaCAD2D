@@ -36,12 +36,10 @@
 #include "Comm/PropertyChanged.hxx"
 #include "Comm/Color.hxx"
 #include "Comm/Memory.hxx"
-#include "Comm/Maths.hxx"
+#include "Comm/Math.hxx"
 #include "Comm/ResourceUtils.hxx"
 #include "Comm/SketchSolve.hxx"
 #include "Comm/OcctHelper.hxx"
-
-#include "Core/Shapes/Sketch/SketchFactory.hxx"
 
 // 辅助类型：判断是否存在 Set(args...)
 template<typename T, typename... Args>

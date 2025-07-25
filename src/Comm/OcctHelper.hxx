@@ -1,9 +1,8 @@
 
-
 // Copyright [2025] TaCAD
 
-#ifndef OCCT_OCCTHELPER_OcctHelper_H_
-#define OCCT_OCCTHELPER_OcctHelper_H_
+#ifndef _OcctHelper_Header_File_
+#define _OcctHelper_Header_File_
 
 #include <string>
 
@@ -12,13 +11,11 @@
 class OcctHelper
 {
 public:
-    // 转换 TCollection_ExtendedString 到 std::string
     static std::string ExtendedStringToStdString(const TCollection_ExtendedString& extStr)
     {
-        // 使用 WideChar 转换为 UTF-8 std::string
         std::wstring wideStr(extStr.ToWideString());
         return std::string(wideStr.begin(), wideStr.end());
     }
 };
 
-#endif  // OCCT_OCCTHELPER_OcctHelper_H_
+#endif  // _OcctHelper_Header_File_

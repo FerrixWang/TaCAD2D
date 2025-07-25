@@ -6,7 +6,7 @@
 #include <any>
 #include <string>
 
-#include <boost/signals2.hpp>
+#include "Comm/Signal.hxx"
 
 class EnablePropertyChanged
 {

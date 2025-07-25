@@ -1,12 +1,12 @@
-//! claas ShortcutManager
-//! 
+#ifndef _ShortcutHandler_Header_File_
+#define _ShortcutHandler_Header_File_
 
-#include <QShortCut>
-#include <QKeySequence>
 #include <QAction>
 #include <QHash>
+#include <QKeySequence>
 #include <QList>
 #include <QPair>
+#include <QShortCut>
 
 #include "Pres/Commands/RelayCommand.hxx"
 
@@ -164,3 +164,5 @@ private:
     QHash<QString, ShortcutList> m_shortcutScopes;
     QList<QShortcut*> m_shortcuts;
 };
+
+#endif  // _ShortcutHandler_Header_File_

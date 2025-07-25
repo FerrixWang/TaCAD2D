@@ -1,12 +1,12 @@
 // ResourceUtils.h
-#ifndef RESOURCEUTILS_H_
-#define RESOURCEUTILS_H_
+#ifndef _ResourceUtils_Header_File_
+#define _ResourceUtils_Header_File_
 
 // Qt includes
-#include <QString>
-#include <QIcon>
 #include <QFile>
+#include <QIcon>
 #include <QImage>
+#include <QString>
 
 class ResourceUtils
 {
@@ -53,4 +53,4 @@ private:
     };
 };
 
-#endif // RESOURCEUTILS_H_
+#endif // _ResourceUtils_Header_File_

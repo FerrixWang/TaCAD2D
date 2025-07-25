@@ -1,11 +1,11 @@
 //! class MessagePrinter
 
-#ifndef MESSAGEPRINTER_HXX
-#define MESSAGEPRINTER_HXX
+#ifndef _MessagePrinter_Header_File_
+#define _MessagePrinter_Header_File_
 
-#include <Message_Printer.hxx>
-#include <Message_Messenger.hxx>
 #include <Message.hxx>
+#include <Message_Messenger.hxx>
+#include <Message_Printer.hxx>
 #include <TCollection_AsciiString.hxx>
 
 class MessagePrinter : public Message_Printer
@@ -28,4 +28,4 @@ protected:
 
 DEFINE_STANDARD_HANDLE(MessagePrinter, Message_Printer)
 
-#endif // MESSAGEPRINTER_HXX
+#endif // _MessagePrinter_Header_File_

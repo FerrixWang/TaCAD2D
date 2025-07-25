@@ -1,10 +1,10 @@
-#ifndef MATH_HXX
-#define MATH_HXX
+#ifndef _Math_Header_File_
+#define _Math_Header_File_
 
 #include <cmath>
 #include <cassert>
 
-namespace Maths
+namespace Math
 {
 // Mathematical constants
 constexpr double DoublePI = M_PI * 2.0;
@@ -13,7 +13,6 @@ constexpr double PI = M_PI;
 constexpr double DegRadMultiplier = 180.0 / M_PI;
 static int Precision = 3;
 
-// Angle normalization
 // Angle normalization
 inline double NormalizeAngleDegree(double value)
 {
@@ -59,7 +58,6 @@ inline double NormalizeAngleRad(double value, double min, double max)
 }
 
 // Rounding
-// Rounding
 inline double RoundToNearest(double value, double divider)
 {
     return std::round(value / divider) * divider;
@@ -67,4 +65,4 @@ inline double RoundToNearest(double value, double divider)
 
 }
 
-#endif // MATH_HXX
+#endif // _Math_Header_File_

@@ -152,9 +152,9 @@ void Marker::_UpdatePresentation()
     {
         _AisPoint->Attributes()->SetPointAspect(_PointAspect);
         _AisPoint->HilightAttributes()->SetPointAspect(_PointAspect);
-        _AisPoint->HilightAttributes()->SetColor(Colors::Highlight);
+        _AisPoint->HilightAttributes()->SetColor(Color::Highlight);
         _AisPoint->DynamicHilightAttributes()->SetPointAspect(_PointAspect);
-        _AisPoint->DynamicHilightAttributes()->SetColor(Colors::Highlight);
+        _AisPoint->DynamicHilightAttributes()->SetColor(Color::Highlight);
     }
 
     if(m_styles & MarkerStyle::Background)

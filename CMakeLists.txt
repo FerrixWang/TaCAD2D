@@ -2,23 +2,24 @@
 
 project(TaCAD VERSION 0.1 LANGUAGES CXX)
 
-# Qt设置
+# Enable Qt's auto-generation features for UI, MOC, and RCC files
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
+# Set C++17 as the standard and enforce its use
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# 添加自定义模块路径
+# Append custom module path for additional CMake scripts
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 
-# 依赖库路径配置
-set(QT6_DIR "" CACHE PATH "Qt6 installation directory")
-set(OpenCASCADE_DIR "" CACHE PATH "OpenCASCADE installation directory")
-set(BOOST_ROOT "" CACHE PATH "Boost root directory")
+# Configure paths for dependency libraries
+set(QT6_DIR "" CACHE PATH "Path to Qt6 installation directory")
+set(OpenCASCADE_DIR "" CACHE PATH "Path to OpenCASCADE installation directory")
+set(BOOST_ROOT "" CACHE PATH "Path to Boost root directory")
 
-# 将用户指定的路径添加到搜索路径
+# Add user-specified paths to the CMake prefix path for finding dependencies
 if(QT6_DIR)
     list(APPEND CMAKE_PREFIX_PATH ${QT6_DIR})
 endif()
@@ -31,20 +32,21 @@ if(BOOST_ROOT)
     list(APPEND CMAKE_PREFIX_PATH ${BOOST_ROOT})
 endif()
 
-# 查找Qt6
+# Find required Qt6 components
 find_package(Qt6 REQUIRED COMPONENTS Core Widgets LinguistTools Test OpenGLWidgets)
 
+# Output the location where Qt6 was found
 message(STATUS "Found Qt6 at ${Qt6_DIR}")
 
-# Qt6标准项目设置
+# Set up standard Qt project configuration
 qt_standard_project_setup()
 
-# 包含配置文件
+# Include configuration files for dependencies
 include(SetupOpenCASCADE)
 include(SetupBoost)
 include(SetupOpenGL)
 
-# 添加子目录
+# Add subdirectories for building
 add_subdirectory(cmake)
 add_subdirectory(ext)
 add_subdirectory(src)

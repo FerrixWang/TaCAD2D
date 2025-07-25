@@ -1,12 +1,12 @@
-// OverridableParameterSet.h
+
 #ifndef _ParameterSet_Header_File_
 #define _ParameterSet_Header_File_
 
+#include <QApplication>
+#include <QMap>
 #include <QObject>
 #include <QSettings>
-#include <QMap>
 #include <QString>
-#include <QApplication>
 
 class OverridableParameterSet : public QObject
 {

@@ -16,7 +16,6 @@ public:
 
 	//! Destructor
 	virtual ~InteractiveEntity() = default;
-
 };
 
 DEFINE_STANDARD_HANDLE(InteractiveEntity, Entity)

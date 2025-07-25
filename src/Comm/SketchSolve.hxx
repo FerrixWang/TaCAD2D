@@ -1,26 +1,13 @@
-//! class SketchSolver
-//! 
 
-#ifndef SKETCH_SOLVERWRAPPER_HXX
-#define SKETCH_SOLVERWRAPPER_HXX
+#ifndef _Sketchsolve_Header_File_
+#define _Sketchsolve_Header_File_
 
-#include <vector>
 #include <memory>
+#include <vector>
 
-// sketchSolver include
 #include "sketchSolve/solve.h"
 
-/*
-* ModernSolver.hpp
-*
-* Modern C++ wrapper for the legacy geometric constraint solver.
-* Provides simplified and safe interfaces for parameter management,
-* constraint addition, and solving.
-*
-* Updated: April 2025
-*/
-
-namespace sketchsolve
+namespace Sketchsolve
 {
 
 enum class ConstraintType
@@ -111,8 +98,8 @@ struct Point
 
     void ToNative(const std::vector<std::shared_ptr<Parameter>>& parameters, point& native) const
     {
-        sketchsolve::ToNative(parameters, x, native.x);
-        sketchsolve::ToNative(parameters, y, native.y);
+        Sketchsolve::ToNative(parameters, x, native.x);
+        Sketchsolve::ToNative(parameters, y, native.y);
     }
 };
 
@@ -136,7 +123,7 @@ struct Circle
     void ToNative(const std::vector<std::shared_ptr<Parameter>>& parameters, circle& native) const
     {
         center.ToNative(parameters, native.center);
-        sketchsolve::ToNative(parameters, radius, native.rad);
+        Sketchsolve::ToNative(parameters, radius, native.rad);
     }
 };
 
@@ -176,7 +163,7 @@ struct Constraint
         arc1.ToNative(parameters, native.arc1);
         arc2.ToNative(parameters, native.arc2);
 
-        sketchsolve::ToNative(parameters, parameter, native.parameter);
+        Sketchsolve::ToNative(parameters, parameter, native.parameter);
     }
 };
 
@@ -238,4 +225,4 @@ public:
 
 }
 
-#endif  // SKETCH_SOLVERWRAPPER_HXX
+#endif  // _Sketchsolve_Header_File_

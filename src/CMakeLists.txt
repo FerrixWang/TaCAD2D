@@ -1,16 +1,9 @@
 
-set(PROJECT_SOURCES ${CMAKE_SOURCE_DIR}/src/main.cc)
+set(PROJECT_SOURCES ${CMAKE_SOURCE_DIR}/src/Main.cxx)
 set(PROJECT_RESOURCES ${CMAKE_SOURCE_DIR}/res/Resource.qrc)
 
 # Recursively find all source and header files
 file(GLOB SUB_DIRECTORY_SOURCES
-    "${CMAKE_SOURCE_DIR}/src/*/*.h"
-    "${CMAKE_SOURCE_DIR}/src/*/*.cc"
-    "${CMAKE_SOURCE_DIR}/src/*/*/*.h"
-    "${CMAKE_SOURCE_DIR}/src/*/*/*.cc"
-    "${CMAKE_SOURCE_DIR}/src/*/*/*/*.h"
-    "${CMAKE_SOURCE_DIR}/src/*/*/*/*.cc"
-
     "${CMAKE_SOURCE_DIR}/src/*/*.hxx"
     "${CMAKE_SOURCE_DIR}/src/*/*.cxx"
     "${CMAKE_SOURCE_DIR}/src/*/*/*.hxx"

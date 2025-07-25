@@ -1,8 +1,6 @@
-//! class SketchSolver
-//! 
 
-#ifndef SKETCH_SOLVER_HXX
-#define SKETCH_SOLVER_HXX
+#ifndef _SketchConstraintSolver_Header_File_
+#define _SketchConstraintSolver_Header_File_
 
 #include <memory>
 #include <vector>
@@ -15,7 +13,7 @@
 #include "Core/Shapes/Sketch/Sketch.hxx"
 #include "Core/Shapes/Sketch/SketchConstraint.hxx"
 
-using namespace sketchsolve;
+using namespace Sketchsolve;
 
 class SketchConstraintSolver : public Standard_Transient
 {
@@ -85,7 +83,7 @@ private:
         }
 
         // Solve
-        auto result = sketchsolve::Solver::Solve(_Parameters, _Constraints, precise);
+        auto result = Sketchsolve::Solver::Solve(_Parameters, _Constraints, precise);
 
         // Update points on success
         if(result == SolveResult::Success)
@@ -260,4 +258,4 @@ public:
 
 DEFINE_STANDARD_HANDLE(SketchConstraintSolver, Standard_Transient)
 
-#endif  // SKETCH_SOLVER_HXX
+#endif  // _SketchConstraintSolver_Header_File_

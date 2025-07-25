@@ -1,7 +1,7 @@
 // Copyright [2025] TaCAD
 
-#ifndef COMM_OCCHANDLE_H_
-#define COMM_OCCHANDLE_H_
+#ifndef _Memory_Header_File_
+#define _Memory_Header_File_
 
 #include <memory>
 #include <utility>
@@ -46,4 +46,4 @@ Unique<T> MakeUnique(Args&&... args) {
     return std::make_unique<T>(std::forward<Args>(args)...);
 }
 
-#endif // COMM_OCCHANDLE_H_
+#endif // _Memory_Header_File_

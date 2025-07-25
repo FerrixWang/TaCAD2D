@@ -138,7 +138,7 @@ SketchUtils::SplitSegmentResult SketchUtils::SplitSegment(const Handle(Sketch)& 
 
 SketchUtils::SplitSegmentResult SketchUtils::SplitSegment(const Handle(Sketch)& sketch, const Handle(SketchSegmentCircle)& circle, double u)
 {
-    u = Maths::NormalizeAngleRad(u);
+    u = Math::NormalizeAngleRad(u);
     if(u == 0.0)
         return SplitSegmentResult::Failed;
 
@@ -158,7 +158,7 @@ SketchUtils::SplitSegmentResult SketchUtils::SplitSegment(const Handle(Sketch)& 
     Handle(SketchSegmentArc) newArc1 = new SketchSegmentArc(circle->RimPoint(), splitPointIndex, rim1Index);
     int seg1Index = sketch->AddSegment(newArc1);
 
-    int rim2Index = sketch->AddPoint(curve->Value(oldRimParameter + Maths::PI + rimOffset));
+    int rim2Index = sketch->AddPoint(curve->Value(oldRimParameter + Math::PI + rimOffset));
     Handle(SketchSegmentArc) newArc2 = new SketchSegmentArc(splitPointIndex, circle->RimPoint(), rim2Index);
     int seg2Index = sketch->AddSegment(newArc2);
 
@@ -174,7 +174,7 @@ SketchUtils::SplitSegmentResult SketchUtils::SplitSegment(const Handle(Sketch)& 
     if(circ.IsNull())
         return SplitSegmentResult::Failed;
 
-    u = Maths::NormalizeAngleRad(u);
+    u = Math::NormalizeAngleRad(u);
     if(u <= parameters[0] || u >= parameters[1])
         return SplitSegmentResult::Failed;
 
@@ -195,7 +195,7 @@ SketchUtils::SplitSegmentResult SketchUtils::SplitSegment(const Handle(Sketch)& 
 
 SketchUtils::SplitSegmentResult SketchUtils::SplitSegment(const Handle(Sketch)& sketch, const Handle(SketchSegmentEllipse)& ellipse, double u)
 {
-    u = Maths::NormalizeAngleRad(u);
+    u = Math::NormalizeAngleRad(u);
     if(u == 0.0)
         return SplitSegmentResult::Failed;
 
@@ -225,9 +225,9 @@ SketchUtils::SplitSegmentResult SketchUtils::SplitSegment(const Handle(Sketch)& 
         return SplitSegmentResult::Failed;
 
     if(parameters[1] < parameters[0])
-        parameters[1] += Maths::DoublePI;
+        parameters[1] += Math::DoublePI;
 
-    u = Maths::NormalizeAngleRad(u);
+    u = Math::NormalizeAngleRad(u);
     if(u <= parameters[0] || u >= parameters[1])
         return SplitSegmentResult::Failed;
 
