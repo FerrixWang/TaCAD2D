@@ -1,88 +1,106 @@
-name: CMake on Windows
+name: Tacad2D Windows Build
 
 on:
   push:
-    branches: [ "main" ]  # Changed to main as per convention
+    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
 
 env:
   BUILD_TYPE: Release
-  PYTHON_VERSION: '3.12'    # Consistent Python version for pyzstd
-  QT_VERSION: '6.7.2'       # Synchronized Qt version
-  QT_ARCH: 'win64_msvc2022_64'
+  builddir: C:/Tacad2D/build/release/
+  libpackdir: C:/Tacad2D/libpack/
+  logdir: C:/logs/
+  libpackdownloadurl: https://github.com/FreeCAD/FreeCAD-LibPack/releases/download/3.1.1.3/LibPack-1.1.0-v3.1.1.3-Release.7z
+  libpackname: LibPack-1.1.0-v3.1.1.3-Release
 
 jobs:
   build:
     runs-on: windows-latest
-
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 0  # Full history for better cache key generation
+      - name: 检出代码库
+        uses: actions/checkout@v4.2.2
+        with:
+          submodules: true
 
-    - name: Setup cache for Qt
-      id: cache-qt
-      uses: actions/cache@v4
-      with:
-        path: ${{ github.workspace }}/Qt
-        key: ${{ runner.os }}-qt-${{ env.QT_VERSION }}-${{ env.QT_ARCH }}-${{ hashFiles('**/*.cmake', '**/*.pro') }}
-        restore-keys: |
-          ${{ runner.os }}-qt-${{ env.QT_VERSION }}-${{ env.QT_ARCH }}-
+      - name: 创建必要目录
+        run: |
+          New-Item -Path "${{ env.builddir }}" -ItemType Directory -Force
+          New-Item -Path "${{ env.libpackdir }}" -ItemType Directory -Force
+          New-Item -Path "${{ env.logdir }}" -ItemType Directory -Force
+        shell: pwsh
 
-    - name: Clean Qt installation directory
-      if: steps.cache-qt.outputs.cache-hit != 'true'
-      run: if exist "${{ github.workspace }}\Qt" rmdir /s /q "${{ github.workspace }}\Qt"
-      shell: cmd
+      - name: 清理旧构建和依赖目录
+        run: |
+          if (Test-Path "${{ env.builddir }}") { Remove-Item -Path "${{ env.builddir }}" -Recurse -Force }
+          if (Test-Path "${{ env.libpackdir }}") { Remove-Item -Path "${{ env.libpackdir }}" -Recurse -Force }
+          New-Item -Path "${{ env.builddir }}" -ItemType Directory -Force
+          New-Item -Path "${{ env.libpackdir }}" -ItemType Directory -Force
+        shell: pwsh
 
-    - name: Install Qt
-      if: steps.cache-qt.outputs.cache-hit != 'true'
-      uses: jurplel/install-qt-action@v4
-      with:
-        version: ${{ env.QT_VERSION }}  # Use environment variable for consistency
-        host: windows
-        target: desktop
-        arch: ${{ env.QT_ARCH }}
-        dir: ${{ github.workspace }}/Qt/
-        install-deps: true
-        modules: qtcharts qtwebengine
-        archives: qtbase qtsvg
-        cache: false  # Caching handled by actions/cache
-        setup-python: true
-        tools: tools_ifw,tools_qtcreator,qt.tools.qtcreator
-        set-env: true
-        aqtversion: ==3.3.*
-        extra: --external 7z
-        use-official: false
+      - name: 获取 libpack 缓存
+        id: getCached
+        uses: actions/cache/restore@v4
+        with:
+          path: ${{ env.libpackdir }}
+          key: libpackforwin-${{ env.libpackname }}
 
-    - name: Setup MSVC
-      uses: ilammy/msvc-dev-cmd@v1
-      with:
-        arch: x64
+      - name: 下载 FreeCAD LibPack
+        if: steps.getCached.outputs.cache-hit != 'true'
+        run: |
+          curl -L -o libpack.7z ${{ env.libpackdownloadurl }}
+          7z x libpack.7z -o"libpacktemp" -r -y
+          Move-Item -Path "libpacktemp/${{ env.libpackname }}/*" -Destination "${{ env.libpackdir }}"
+          Remove-Item -Path "libpacktemp" -Recurse -Force
+        shell: pwsh
 
-    - name: Configure CMake
-      run: |
-        cmake -S . -B build \
-          -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }} \
-          -DCMAKE_PREFIX_PATH="${{ github.workspace }}/Qt/${{ env.QT_VERSION }}/${{ env.QT_ARCH }}" \
-          -A x64
-      shell: cmd
+      - name: 保存 libpack 到缓存
+        if: steps.getCached.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: ${{ env.libpackdir }}
+          key: ${{ steps.getCached.outputs.cache-primary-key }}
 
-    - name: Build
-      run: |
-        cmake --build build --config ${{ env.BUILD_TYPE }} --parallel 4
-      shell: cmd
+      - name: 安装 CMake
+        uses: jwlawson/actions-setup-cmake@v2.0.2
+        with:
+          cmake-version: '3.31.6'
 
-    - name: Test
-      working-directory: ${{ github.workspace }}/build
-      run: |
-        ctest --build-config ${{ env.BUILD_TYPE }} --output-on-failure --parallel 4
-      shell: cmd
+      - name: 设置 MSVC 环境
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x64
 
-    - name: Cleanup
-      if: always()
-      run: |
-        if exist "${{ github.workspace }}\build" rmdir /s /q "${{ github.workspace }}\build"
-      shell: cmd
-      continue-on-error: true
+      - name: 配置 CMake
+        run: |
+          cmake -S . -B "${{ env.builddir }}" `
+            -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }} `
+            -DCMAKE_PREFIX_PATH="${{ env.libpackdir }}" `
+            -A x64
+        shell: pwsh
+
+      - name: 编译项目
+        run: |
+          Set-Location "${{ env.builddir }}"
+          msbuild ALL_BUILD.vcxproj /m /p:Configuration=Release
+        shell: pwsh
+
+      - name: 运行测试
+        working-directory: ${{ env.builddir }}
+        run: |
+          ctest --build-config ${{ env.BUILD_TYPE }} --output-on-failure
+        shell: pwsh
+
+      - name: 上传日志
+        if: always()
+        uses: actions/upload-artifact@v4.6.2
+        with:
+          name: tacad2d-logs
+          path: ${{ env.logdir }}
+
+      - name: 清理
+        if: always()
+        run: |
+          if (Test-Path "${{ env.builddir }}") { Remove-Item -Path "${{ env.builddir }}" -Recurse -Force }
+          if (Test-Path "${{ env.libpackdir }}") { Remove-Item -Path "${{ env.libpackdir }}" -Recurse -Force }
+        shell: pwsh
