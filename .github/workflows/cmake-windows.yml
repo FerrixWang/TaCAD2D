@@ -25,7 +25,7 @@ jobs:
       run: |
         echo "github.workspace: ${{ github.workspace }}"
         dir "${{ github.workspace }}"
-        echo "Parent directory:"
+        echo "Parent directory: ${{ github.workspace }}/.."
         dir "${{ github.workspace }}/.."
       shell: cmd
               
