@@ -28,7 +28,38 @@ jobs:
         echo "Parent directory: ${{ github.workspace }}/.."
         dir "${{ github.workspace }}/.."
       shell: cmd
-              
+
+
+    # 下载 Open CASCADE 综合包
+    - name: Download OpenCASCADE
+      run: |
+        curl -L "https://github.com/Open-Cascade-SAS/OCCT/releases/download/V7_9_1/occt_vc14-64-combined.zip" -o occt.zip
+      shell: cmd
+
+    # 解压 OpenCASCADE 到父目录
+    - name: Extract OpenCASCADE
+      run: |
+        mkdir "%GITHUB_WORKSPACE%\..\occt"
+        tar -xf occt.zip -C "%GITHUB_WORKSPACE%\..\occt"
+      shell: cmd
+
+    # 查找 3rdparty-vc14-64 下的所有 bin 目录并添加到 PATH
+    - name: Set 3rdparty bin directories to PATH
+      run: |
+        for /r "%GITHUB_WORKSPACE%\..\occt\3rdparty-vc14-64" %d in (bin) do if exist %d (
+          set "PATH=%PATH%;%d"
+        )
+        echo "Updated PATH: %PATH%"
+      shell: cmd
+
+    # 验证目录结构
+    - name: Verify Directory Structure
+      run: |
+        dir "%GITHUB_WORKSPACE%\.."
+        dir "%GITHUB_WORKSPACE%\..\occt"
+      shell: cmd
+
+        
     - name: Install Qt
       uses: jurplel/install-qt-action@v4
       with:
