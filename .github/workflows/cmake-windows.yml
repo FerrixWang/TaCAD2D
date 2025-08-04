@@ -20,7 +20,15 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    
+
+    - name: Check workspace and parent directory
+      run: |
+        echo "github.workspace: ${{ github.workspace }}"
+        dir "${{ github.workspace }}"
+        echo "Parent directory:"
+        dir "${{ github.workspace }}/.."
+      shell: cmd
+              
     - name: Install Qt
       uses: jurplel/install-qt-action@v4
       with:
