@@ -24,6 +24,7 @@ jobs:
     - name: Install Qt
       uses: jurplel/install-qt-action@v4
       with:
+        dir: ${{ github.workspace }}/..
         arch: 'win64_msvc2022_64'
       
     - name: Install boost
@@ -34,6 +35,7 @@ jobs:
         # A list of supported versions can be found here:
         # https://github.com/MarkusJx/prebuilt-boost/blob/main/versions-manifest.json
         boost_version: 1.81.0
+        boost_install_dir: ${{ github.workspace }}/..
         # OPTIONAL: Specify a platform version
         platform_version: 2022
         # OPTIONAL: Specify a toolset
