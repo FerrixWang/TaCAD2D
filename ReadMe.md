@@ -127,8 +127,6 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ## Community
 
-- **Issues**: Report bugs or request features at [GitHub Issues](https://github.com/FerrixWang/Tacad2D/issues).
-- **Discussions**: Join via [X](https://x.com/tagcad) or OCCT forums.
 - **Contact**: Email [support@tagcad.com](mailto:support@tagcad.com).
 
 ## License
@@ -139,4 +137,3 @@ Tacad2D is licensed under the [MIT License](LICENSE).
 
 - Built on [Open CASCADE Technology](https://dev.opencascade.org/) OCAF framework.
 - Inspired by [Macad3D](https://github.com/Macad3D/Macad3D) for architecture and design patterns.
-- Thanks to the open-source CAD community.
