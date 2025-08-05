@@ -29,7 +29,7 @@ public:
 	TDF_Label Label() const
 	{
 		return myLabel;
-	}
+    }
 
 private:
 	TDF_Label myLabel; //!< Label of the Body

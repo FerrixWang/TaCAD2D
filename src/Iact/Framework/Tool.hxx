@@ -30,7 +30,7 @@ public:
 			m_isActive = true;
 			return true;
 		}
-		return false;
+        return false;
 	}
 
 	void stop()

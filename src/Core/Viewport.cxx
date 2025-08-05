@@ -29,8 +29,7 @@ Viewport::Viewport(const Handle(Workspace)& workspace, const TDF_Label& theLabel
 
 void Viewport::Init(bool useMsaa)
 {
-    if(m_v3dView || !m_workspace)
-    {
+    if(m_v3dView || !m_workspace) {
         return;
     }
 

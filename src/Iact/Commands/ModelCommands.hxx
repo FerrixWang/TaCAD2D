@@ -26,7 +26,7 @@ public:
             command.setText(QObject::tr("Box"));
             command.setIcon(ResourceUtils::icon("Model/Prim-Box"));
             command.setToolTip(QObject::tr("Creates a new body with a box shape."));
-			command.setCheckable(true);
+            command.setCheckable(true);
             command.connect(&command, &QAction::triggered, []() {command.execute(); });
         }
         return &command;

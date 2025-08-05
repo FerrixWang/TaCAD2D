@@ -46,4 +46,4 @@ Unique<T> MakeUnique(Args&&... args) {
     return std::make_unique<T>(std::forward<Args>(args)...);
 }
 
-#endif // _Memory_Header_File_
+#endif  // _Memory_Header_File_
