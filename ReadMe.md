@@ -47,13 +47,13 @@ The following steps align with the GitHub Actions workflow for Windows.
 2. **Set Up Dependencies**
    - **OpenCASCADE 7.9.1**:
      - Download [occt_vc14-64.zip](https://github.com/Open-Cascade-SAS/OCCT/releases/download/V7_9_1/occt_vc14-64.zip).
-     - Extract to `C:\occt`.
+     - Extract to a directory of your choice, e.g., `C:\occt`.
    - **Qt 6.8.3**:
      - Install via the [Qt Online Installer](https://www.qt.io/download) for MSVC 2022 (64-bit).
-     - Note the path, e.g., `C:\Qt\6.8.3\msvc2022_64`.
+     - Note the installation path, e.g., `C:\Qt\6.8.3\msvc2022_64`.
    - **Boost 1.81.0**:
      - Download from [Boost 1.81.0](https://www.boost.org/users/history/version_1_81_0.html).
-     - Extract to `C:\boost`.
+     - Extract to a directory of your choice, e.g., `C:\boost`.
 
 3. **Configure CMake**
    ```bash
@@ -61,12 +61,13 @@ The following steps align with the GitHub Actions workflow for Windows.
    cd build
    cmake .. ^
      -DCMAKE_BUILD_TYPE=Release ^
-     -DOpenCASCADE_DIR="C:\occt\occt_vc14-64\cmake" ^
-     -DQt6_DIR="C:\Qt\6.8.3\msvc2022_64\lib\cmake\Qt6" ^
-     -DBOOST_ROOT="C:\boost" ^
+     -DOpenCASCADE_DIR="<path-to-occt>\occt_vc14-64\cmake" ^
+     -DQt6_DIR="<path-to-qt>\6.8.3\msvc2022_64\lib\cmake\Qt6" ^
+     -DBOOST_ROOT="<path-to-boost>" ^
      -DBOOST_NO_CMAKE=TRUE ^
      -DBOOST_NO_BOOST_CMAKE=TRUE
    ```
+   Replace `<path-to-occt>`, `<path-to-qt>`, and `<path-to-boost>` with the actual paths where you extracted or installed the dependencies.
 
 4. **Build the Project**
    ```bash
@@ -93,7 +94,7 @@ The following steps align with the GitHub Actions workflow for Windows.
    Set `OpenCASCADE_DIR`, `Qt6_DIR`, and `BOOST_ROOT` if needed.
 
 ### Troubleshooting
-- Ensure dependency paths match the CMake configuration.
+- Ensure dependency paths match the CMake configuration (e.g., `<path-to-occt>\occt_vc14-64\cmake`).
 - For Windows, verify Visual Studio 2022 includes the C++ workload.
 - Check [.github/workflows/cmake-windows.yml](.github/workflows/cmake-windows.yml) for exact dependency setup.
 
