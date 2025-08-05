@@ -1,5 +1,3 @@
-# This starter workflow is for a CMake project running on a single platform. There is a different starter workflow if you need cross-platform coverage.
-# See: https://github.com/actions/starter-workflows/blob/main/ci/cmake-multi-platform.yml
 name: CMake on Windows
 on:
   push:
@@ -8,26 +6,28 @@ on:
     branches: [ "master" ]
 
 env:
-  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
   BUILD_TYPE: Release
 
 jobs:
   build:
-    # The CMake configure and build commands are platform agnostic and should work equally well on Windows or Mac.
-    # You can convert this to a matrix build if you need cross-platform coverage.
-    # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
     runs-on: windows-latest
 
     steps:
     - uses: actions/checkout@v4
 
-    # 恢复 OpenCASCADE 缓存
     - name: Cache OpenCASCADE
       id: cache-occt
       uses: actions/cache@v4
       with:
         path: ${{ github.workspace }}/../occt
         key: occt-7.9.1-windows
+
+    - name: Cache Qt
+      id: cache-qt
+      uses: actions/cache@v4
+      with:
+        path: ${{ github.workspace }}/../Qt
+        key: qt-6.8.3-windows-msvc2022
 
     - name: Check workspace and parent directory
       run: |
@@ -37,14 +37,12 @@ jobs:
         dir "${{ github.workspace }}/.."
       shell: cmd
 
-    # 下载 Open CASCADE 二进制包（如果缓存未命中）
     - name: Download OpenCASCADE
       if: steps.cache-occt.outputs.cache-hit != 'true'
       run: |
         curl -L "https://github.com/Open-Cascade-SAS/OCCT/releases/download/V7_9_1/occt_vc14-64.zip" -o occt.zip
       shell: cmd
 
-    # 解压 OpenCASCADE 到父目录（如果缓存未命中）
     - name: Extract OpenCASCADE
       if: steps.cache-occt.outputs.cache-hit != 'true'
       run: |
@@ -52,7 +50,6 @@ jobs:
         tar -xf occt.zip -C "%GITHUB_WORKSPACE%\..\occt"
       shell: cmd
 
-    # 验证目录结构
     - name: Verify Directory Structure
       run: |
         dir "%GITHUB_WORKSPACE%\.."
@@ -64,35 +61,29 @@ jobs:
       with:
         dir: ${{ github.workspace }}/..
         arch: 'win64_msvc2022_64'
+        version: '6.8.3'  # 指定 Qt 版本为 6.8.3
       
-    - name: Install boost
+    - name: Install Boost
       uses: MarkusJx/install-boost@v2
       id: install-boost
       with:
-        # REQUIRED: Specify the required boost version
-        # A list of supported versions can be found here:
-        # https://github.com/MarkusJx/prebuilt-boost/blob/main/versions-manifest.json
         boost_version: 1.81.0
         boost_install_dir: ${{ github.workspace }}/..
-        # OPTIONAL: Specify a platform version
         platform_version: 2022
-        # OPTIONAL: Specify a toolset
         toolset: msvc
     
-        # NOTE: If a boost version matching all requirements cannot be found,
-        # this build step will fail
-    
-    # - name: Configure CMake
-      # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
-      # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
-    # run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+    - name: Configure CMake
+      run: |
+        cmake -B ${{github.workspace}}/build ^
+              -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} ^
+              -DOpenCASCADE_DIR="${{github.workspace}}/../occt/occt_vc14-64/cmake" ^
+              -DQt6_DIR="${{github.workspace}}/../Qt/6.8.3/msvc2022_64/lib/cmake/Qt6" ^
+              -DBOOST_ROOT="${{github.workspace}}/../boost" ^
+              -DBOOST_NO_CMAKE=TRUE ^
+              -DBOOST_NO_BOOST_CMAKE=TRUE
+      shell: cmd
 
-   # - name: Build
-      # Build your program with the given configuration
-    #  run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
-
-  #  - name: Test
-    #  working-directory: ${{github.workspace}}/build
-      # Execute tests defined by the CMake configuration.
-      # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
-   #   run: ctest -C ${{env.BUILD_TYPE}}
+    - name: Build
+      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} --parallel
+      shell: cmd
+      
