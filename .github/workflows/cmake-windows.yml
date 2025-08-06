@@ -114,5 +114,3 @@ jobs:
         draft: false
         prerelease: false
         files: ${{ env.ARTIFACT_NAME }}.zip
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
