@@ -1,4 +1,5 @@
 name: CMake on Windows
+
 on:
   push:
     branches: [ "master" ]
@@ -7,6 +8,8 @@ on:
 
 env:
   BUILD_TYPE: Release
+  ARTIFACT_NAME: my-app-${{ github.sha }}
+  RELEASE_NAME: release-${{ github.run_number }}
 
 jobs:
   build:
@@ -61,8 +64,8 @@ jobs:
       with:
         dir: ${{ github.workspace }}/..
         arch: 'win64_msvc2022_64'
-        version: '6.8.3'  # 指定 Qt 版本为 6.8.3
-      
+        version: '6.8.3'
+
     - name: Install Boost
       uses: MarkusJx/install-boost@v2
       id: install-boost
@@ -86,4 +89,30 @@ jobs:
     - name: Build
       run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} --parallel
       shell: cmd
-      
+
+    - name: Package Build Output
+      run: |
+        mkdir package
+        copy "${{github.workspace}}\build\${{env.BUILD_TYPE}}\*.exe" package\
+        copy "${{github.workspace}}\build\${{env.BUILD_TYPE}}\*.dll" package\
+        7z a -tzip "${{env.ARTIFACT_NAME}}.zip" .\package\*
+      shell: cmd
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ env.ARTIFACT_NAME }}
+        path: ${{ env.ARTIFACT_NAME }}.zip
+        retention-days: 7
+
+    - name: Create Release and Upload to GitHub Releases
+      if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: ${{ env.RELEASE_NAME }}
+        name: Release ${{ env.RELEASE_NAME }}
+        draft: false
+        prerelease: false
+        files: ${{ env.ARTIFACT_NAME }}.zip
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
