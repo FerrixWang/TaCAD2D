@@ -127,7 +127,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ## Community
 
-- **Contact**: Email [support@tagcad.com](mailto:support@tagcad.com).
+- **Contact**: Email [ferrixwang@foxmail.com](mailto:ferrixwang@foxmail.com).
 
 ## License
 
