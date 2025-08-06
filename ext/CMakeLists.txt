@@ -45,3 +45,7 @@ set(CXXOPTS_SOURCES
 add_library(cxxopts INTERFACE)
 # Specify include directories for sketchSolveLib
 target_include_directories(cxxopts INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/cxxopts)
+
+
+set(ADS_VERSION "3.8.1")
+add_subdirectory(qads)

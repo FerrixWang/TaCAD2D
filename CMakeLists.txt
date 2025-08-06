@@ -42,11 +42,10 @@ message(STATUS "Found Qt6 at ${Qt6_DIR}")
 qt_standard_project_setup()
 
 # Include configuration files for dependencies
-include(SetupOpenCASCADE)
+include(SetupOcct)
 include(SetupBoost)
 include(SetupOpenGL)
 
 # Add subdirectories for building
-add_subdirectory(cmake)
 add_subdirectory(ext)
 add_subdirectory(src)
