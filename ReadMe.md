@@ -2,6 +2,8 @@
 
 [![CMake on Windows](https://github.com/FerrixWang/Tacad2D/actions/workflows/cmake-windows.yml/badge.svg)](https://github.com/FerrixWang/Tacad2D/actions/workflows/cmake-windows.yml)
 
+[![Tacad2D](./res/Icons/App/App-MainLogo.svg)
+
 **Tacad2D: Cross-Platform 2D CAD Powered by OCCT OCAF**
 
 > 🛠️ *Project Name Origin*:  
