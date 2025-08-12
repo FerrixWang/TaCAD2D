@@ -1,7 +1,6 @@
 // Copyright [2025] TaCAD
 
-#ifndef APP_APPCONTEXT_H_
-#define APP_APPCONTEXT_H_
+#pragma once
 
 // Project includes
 #include "App/CommandLine.hxx"
@@ -48,5 +47,3 @@ private:
 
 	MainWindow* m_mainWindow = nullptr;
 };
-
-#endif  // APP_APPCONTEXT_H_

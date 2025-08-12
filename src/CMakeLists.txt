@@ -29,11 +29,23 @@ target_precompile_headers(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/src/Pch.hx
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_include_directories(${PROJECT_NAME} PRIVATE ${OpenCASCADE_INCLUDE_DIR})
 
-# Link OpenCASCADE libraries
-foreach (LIB ${OpenCASCADE_LIBRARIES})
-  target_link_libraries(${PROJECT_NAME} PRIVATE debug ${OpenCASCADE_LIBRARY_DIR}d/${LIB}.lib)
-  target_link_libraries(${PROJECT_NAME} PRIVATE optimized ${OpenCASCADE_LIBRARY_DIR}/${LIB}.lib)
-endforeach()
+
+if(APPLE)
+    target_link_libraries(${PROJECT_NAME} PRIVATE ${OpenCASCADE_LIBRARIES})
+
+    target_link_libraries(${PROJECT_NAME} PRIVATE
+        "-framework Cocoa"
+        "-framework OpenGL"
+    )
+    set(CMAKE_MACOSX_RPATH ON)
+    set(CMAKE_INSTALL_RPATH "@executable_path/../Frameworks")
+elseif(WIN32)
+    # Link OpenCASCADE libraries
+    foreach (LIB ${OpenCASCADE_LIBRARIES})
+      target_link_libraries(${PROJECT_NAME} PRIVATE debug ${OpenCASCADE_LIBRARY_DIR}d/${LIB}.lib)
+      target_link_libraries(${PROJECT_NAME} PRIVATE optimized ${OpenCASCADE_LIBRARY_DIR}/${LIB}.lib)
+    endforeach()
+endif()
 
 target_link_libraries(${PROJECT_NAME} PRIVATE Qt${QT_VERSION_MAJOR}::Core)
 target_link_libraries(${PROJECT_NAME} PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
