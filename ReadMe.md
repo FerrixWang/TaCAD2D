@@ -1,18 +1,18 @@
-﻿# Tacad2D
+# TaCAD2D
 
 [![CMake on Windows](https://github.com/FerrixWang/Tacad2D/actions/workflows/cmake-windows.yml/badge.svg)](https://github.com/FerrixWang/Tacad2D/actions/workflows/cmake-windows.yml)
 
-![Tacad2D Screenshot](./doc/ReadMeLogo.png)
+![TaCAD2D Screenshot](./doc/ReadMeLogo.png)
 
-**Tacad2D: Cross-Platform 2D CAD Powered by OCCT OCAF**
+**TaCAD2D: Cross-Platform 2D CAD Powered by OCCT OCAF**
 
 > 🛠️ *Project Name Origin*:  
-> **Tacad2D** stands for **"TAG CAD in 2D"**, where "**TA**" refers to "**TAG**" (Tag-based Architecture), reflecting its use of OCCT’s label-driven OCAF data structure.  
-> Inspired by [Macad3D](https://github.com/Macad3D/Macad3D), an open-source 3D CAD system based on OCCT.
+> **TaCAD2D** stands for **"TAG CAD in 2D"**, where "**TA**" refers to "**TAG**" (Tag-based Architecture), reflecting its use of OCCT’s label-driven OCAF data structure.  
+> Inspired by [MaCAD3D](https://github.com/Macad3D/Macad3D), an open-source 3D CAD system based on OCCT.
 
-**Tacad2D** is a cross-platform 2D CAD application built on the [Open CASCADE Technology (OCCT)](https://dev.opencascade.org/) OCAF framework. It provides precise, efficient, and structured 2D design tools for engineers, architects, and developers, supporting mechanical schematics, architectural layouts, and circuit diagrams.
+**TaCAD2D** is a cross-platform 2D CAD application built on the [Open CASCADE Technology (OCCT)](https://dev.opencascade.org/) OCAF framework. It provides precise, efficient, and structured 2D design tools for engineers, architects, and developers, supporting mechanical schematics, architectural layouts, and circuit diagrams.
 
-![Tacad2D Screenshot](./doc/screenshot.png)
+![TaCAD2D Screenshot](./doc/screenshot.png)
 
 ## Key Features
 
