@@ -1,1 +1,11 @@
-# test
+if(TACAD_USE_GTEST)
+    find_package(GTest REQUIRED)
+    set(Google_Tests_LIBS ${GTEST_LIBRARIES} ${GMOCK_LIBRARIES})
+else()
+    if ( EXISTS "${CMAKE_SOURCE_DIR}/tests/lib/googletest" )
+        include_directories( ${CMAKE_SOURCE_DIR}/tests/lib/googletest/include/ )
+        include_directories( ${CMAKE_SOURCE_DIR}/tests/lib/googlemock/include/ )
+    else()
+        message( SEND_ERROR "The Google Test submodule is not available. Please run git submodule update --init" )
+    endif()
+endif()
