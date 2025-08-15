@@ -1,2 +1,2 @@
-add_subdirectory(Base)
 add_subdirectory(App)
+add_subdirectory(Base)
