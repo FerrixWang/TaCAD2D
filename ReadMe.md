@@ -1,3 +1,4 @@
+
 ![TaCAD2D Screenshot](./doc/ReadMeLogo.png)
 
 #
@@ -10,10 +11,11 @@
 > **TaCAD2D** stands for **"TAG CAD in 2D"**, where "**TA**" refers to "**TAG**" (Tag-based Architecture), reflecting its use of OCCT’s label-driven OCAF data structure.  
 > Inspired by [MaCAD3D](https://github.com/Macad3D/Macad3D), an open-source 3D CAD system based on OCCT.
 
+## Screenshot
 
 ![TaCAD2D Screenshot](./doc/screenshot.png)
 
-## Key Features
+## Features
 
 - **OCAF Label-Driven Design**: Organizes geometry, attributes, and relationships using OCCT’s hierarchical label system for scalable data management.
 - **Cross-Platform**: Runs on Windows, Linux, and macOS.
