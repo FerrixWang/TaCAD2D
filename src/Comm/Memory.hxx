@@ -1,7 +1,6 @@
 // Copyright [2025] TaCAD
 
-#ifndef _Memory_Header_File_
-#define _Memory_Header_File_
+#pragma once
 
 #include <memory>
 #include <utility>
@@ -45,5 +44,3 @@ template<typename T, typename... Args>
 Unique<T> MakeUnique(Args&&... args) {
     return std::make_unique<T>(std::forward<Args>(args)...);
 }
-
-#endif  // _Memory_Header_File_

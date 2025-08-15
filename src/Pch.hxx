@@ -1,5 +1,4 @@
-#ifndef _PROJECT_PCH_H_
-#define _PROJECT_PCH_H_
+#pragma once
 
 #ifdef _WIN32
 #include <windows.h>
@@ -41,14 +40,14 @@
 #include "Comm/SketchSolve.hxx"
 #include "Comm/OcctHelper.hxx"
 
-// ¸¨ÖúÀàÐÍ£ºÅÐ¶ÏÊÇ·ñ´æÔÚ Set(args...)
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í£ï¿½ï¿½Ð¶ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ Set(args...)
 template<typename T, typename... Args>
 auto TrySet(T* obj, const TDF_Label&, Args&&... args) -> decltype(T::Set(std::forward<Args>(args)...), void())
 {
     T::Set(std::forward<Args>(args)...);
 }
 
-// ÈôÉÏÊö²»Æ¥Åä£¬Ôò³¢ÊÔ Set(label, args...)
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¥ï¿½ä£¬ï¿½ï¿½ï¿½ï¿½ Set(label, args...)
 template<typename T, typename... Args>
 auto TrySet(T* obj, const TDF_Label& label, Args&&... args) -> decltype(T::Set(label, std::forward<Args>(args)...), void())
 {
@@ -107,5 +106,3 @@ public: Handle(refType) refName##Attribute() const                              
 {                                                                                       \
     return SketchFactory::Wrap<refType>(refName##Label());                              \
 }
-
-#endif // _PROJECT_PCH_H_
